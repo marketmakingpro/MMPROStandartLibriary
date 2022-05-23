@@ -18,6 +18,7 @@ export const Header = () => {
     if (disconnectIsPossible) {
       // @ts-ignore
       if(connector && connector.walletConnectProvider){
+        console.log("disconnecting walletconnect")
         deactivate();
       }else{
         setIsDisplayingMetamaskDisconnectTip(true)

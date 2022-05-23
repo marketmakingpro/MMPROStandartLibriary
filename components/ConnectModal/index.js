@@ -26,6 +26,7 @@ export default function ConnectModal(props) {
             <button
               className="connection-button flex flex-row items-center m-1 p-1 rounded-md cursor-pointer"
               onClick={() => {
+                console.log("activating injected (MetaMask)")
                 activate(injected);
                 closeHandle();
               }}
@@ -42,6 +43,7 @@ export default function ConnectModal(props) {
             <button
               className="connection-button flex flex-row items-center m-1 p-1 rounded-md cursor-pointer"
               onClick={() => {
+                console.log("activating walletconnect")
                 activate(walletconnect).then(()=>{
                   window.location.reload()
                 });

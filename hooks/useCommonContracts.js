@@ -19,8 +19,10 @@ export const useWeb3 = () => {
   const { library } = useWeb3React();
   let web3;
   if (library) {
+    console.log("creating Web3 instance from currentProvider or httpProvider")
     web3 = new Web3(library.currentProvider || httpProvider);
   } else {
+    console.log("creating Web3 instance from httpProvider")
     web3 = new Web3(httpProvider);
   }
   return web3;

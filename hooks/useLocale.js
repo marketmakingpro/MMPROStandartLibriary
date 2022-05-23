@@ -22,10 +22,12 @@ export const useLocale = (forcedLocale) => {
     if (newLocale === '') {
       newLocale = "en"
     }
+    console.log("updated locale, new locale: ", newLocale)
     return newLocale
   }
 
   const setLocale = (newLocale) => {
+    console.log("setting new locale: ", newLocale)
     setCookie("locale", newLocale)
     setLocaleState(newLocale)
   }

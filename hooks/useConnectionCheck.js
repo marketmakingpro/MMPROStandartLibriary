@@ -9,6 +9,7 @@ export const useConnectionCheck = () => {
 
   function tryWalletConnect() {
     if(!active && shouldTryWalletConnect){
+      console.log("auto connecting through walletconnect")
       activate(walletconnectNoQr)
       setShouldTryWalletConnect(false)
     }
@@ -16,6 +17,7 @@ export const useConnectionCheck = () => {
 
   useEffect(() => {
     if(active && shouldTryWalletConnect){
+      console.log("connected no need to try auto connecting through walletconnect")
       setShouldTryWalletConnect(false)
     } else {
       tryWalletConnect()

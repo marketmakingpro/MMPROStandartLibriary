@@ -6,14 +6,17 @@ export const isEthereumConnected = window.ethereum
 export const isEthereumMetaMask = window.ethereum
   ? window.ethereum.isMetaMask
   : null;
-export const ethereumSendTransaction = (params) =>
+export const ethereumSendTransaction = (params) => {
+  console.log("sending ethereum transaction with params:", params)
   window.ethereum.request({
     method: "eth_sendTransaction",
     params,
   });
+}
 
 export const switchNetwork = async (chainId) => {
   try {
+    console.log("trying to switch network to bsc main-net")
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: "0x38" }],
@@ -21,7 +24,9 @@ export const switchNetwork = async (chainId) => {
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
     if (switchError.code === 4902) {
+      console.log("error while switching network, the chain has not been added to MetaMask")
       try {
+        console.log("trying to add network to MetaMask")
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [
@@ -35,6 +40,7 @@ export const switchNetwork = async (chainId) => {
           ],
         });
       } catch (error) {
+        console.log("error while trying to add network to MetaMask")
         console.error(error);
       }
     }
