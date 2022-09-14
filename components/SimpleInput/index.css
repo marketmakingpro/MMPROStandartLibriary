@@ -22,6 +22,16 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
+.icon {
+    position: absolute;
+    z-index: 2;
+    right: 4px;
+    top: 15px;
+    padding-left: 4px;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
 .input-container {
     position: relative;
 }

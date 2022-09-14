@@ -99,7 +99,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
                 displayNotification
               }}
             >
-              <div className={`main-content-container ${isDarkBG ? "main-gradient" : "main-gradient-light"}`}>
+              <div className={`main-content-container main-background`}>
                 <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
                   <TitleWrapper>
                     {notificationIcon}

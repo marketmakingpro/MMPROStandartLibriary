@@ -31,14 +31,6 @@ export const LocaleSelector = (props: {locales: string[]}) => {
           <span className={'inner-text'}>{loc.toUpperCase()}</span>
         </button>
       ))}
-
-      {/*<button*/}
-      {/*  className={`locale-button`}*/}
-      {/*  style={{background: "none", zIndex: 4}}*/}
-      {/*  onClick={() => {*/}
-      {/*    setIsOpened(!isOpened)*/}
-      {/*  }}*/}
-      {/*/>*/}
     </div>
   );
 };

@@ -17,6 +17,8 @@ interface SimpleInputPropType {
   errorTooltipText?: string;
   hasDefaultValueButton?: boolean;
   defaultValueButtonText?: string;
+  hasIcon?: boolean;
+  Icon?: React.ReactNode;
   defaultValue?: string;
   isValid?: boolean;
   id?: string;
@@ -55,6 +57,8 @@ const SimpleInput = (props: SimpleInputPropType) => {
     errorTooltipText,
     hasDefaultValueButton,
     defaultValueButtonText,
+    hasIcon,
+    Icon,
     defaultValue,
     autoComplete,
     id,
@@ -150,6 +154,11 @@ const SimpleInput = (props: SimpleInputPropType) => {
         <button type={"button"} className={`default-value-button`} onClick={setDefaultValue}>
           {defaultValueButtonText}
         </button>
+      }
+      {(hasIcon && Icon && !displayAsLabel && props.inputProps.className && !props.inputProps.className.includes('skeleton')) &&
+        <div className={`icon`}>
+          {Icon}
+        </div>
       }
       {(props.inputProps.className && !displayAsLabel && !props.inputProps.className.includes('skeleton')) &&
         <div className={`validation-error-tooltip ${shouldDisplayAsValid ? "" : "active"}`}>
