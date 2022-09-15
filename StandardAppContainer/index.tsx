@@ -68,7 +68,11 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
 
     fetch(getUserDataUrl, requestOptions)
       .then(res => res.json())
-      .then(json => setIsUserVerified(json.data.isVerified));
+      .then(json => {
+        if(json && json.data && json.data.isVerified){
+          setIsUserVerified(json.data.isVerified)
+        }
+      });
   }
 
   useEffect(() => {
