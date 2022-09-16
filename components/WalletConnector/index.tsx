@@ -189,7 +189,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
               <div
                 className={`connection-button`}
                 onClick={() => {
-                  activate(injected);
+                  activate(injected).then();
                 }}
               >
                 <img

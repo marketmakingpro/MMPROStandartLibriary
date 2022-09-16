@@ -38,7 +38,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     forcedLocale = locales[0];
   }
   // @ts-ignore
-  const {active, activate, networkError, account} = useWeb3React();
+  const {active, activate, networkError, account, connector} = useWeb3React();
   const {setLocale, locale} = useLocale(forcedLocale);
   const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false);
   const [notificationTitle, setNotificationTitle] = useState('')
@@ -69,7 +69,12 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
 
     fetch(getUserDataUrl, requestOptions)
       .then(res => res.json())
-      .then(json => setIsUserVerified(json.data.isVerified));
+      .then(json => {
+        if(json && json.data){
+          setIsUserVerified(json.data.isVerified)
+          Sentry.setContext("User KYC Data", json.data);
+        }
+      });
   }
 
   useEffect(() => {
@@ -84,8 +89,15 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     if (account) {
       getUserVerification()
       Sentry.setUser({ wallet: account });
+      Sentry.setTag("wallet", account);
+      // @ts-ignore
+      if(connector.walletConnectProvider){
+        Sentry.setTag("connection method", "Wallet Connect");
+      }else{
+        Sentry.setTag("connection method", "Metamask");
+      }
     }
-  }, [account])
+  }, [account, isUserVerified])
 
   return (
     // @ts-ignore
