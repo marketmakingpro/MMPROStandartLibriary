@@ -83,7 +83,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   useEffect(() => {
     if (account) {
       getUserVerification()
-      Sentry.setUser({ id: account });
+      Sentry.setUser({ wallet: account });
     }
   }, [account])
 
