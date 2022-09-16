@@ -28,8 +28,10 @@
     top: 100px;
     right: -400px;
     padding: 24px;
-    background: rgba(177, 177, 177, 0.3);
-    backdrop-filter: blur(30px);
+    background: #fff;
+    border: 1px solid #04C35C;
+    color: #181833;
+    box-shadow: -1px 5px 16px 7px rgba(24, 24, 51, .14);
 }
 
 .notification.shown{

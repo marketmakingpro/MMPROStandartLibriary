@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './index.css'
-import Logo from '../../icons/MMPROLogo';
-import logoSmall from '../../images/MMProLogoSmall.svg'
+import Logo from '../../icons/MMPROLogo/preview.svg';
+import LogoSmall from '../../icons/SmallMMPROLogo/preview.svg'
 import {LocaleSelector} from "../LocaleSelector";
 import {Link} from "react-router-dom";
 import WalletConnector, {HeaderButton} from "../WalletConnector";
@@ -16,7 +16,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   min-width: 340px;
   z-index: 5;
-  padding: 25px 65px;
+  padding: 16px;
   border-bottom: 1px solid #181833;
 `
 
@@ -33,19 +33,16 @@ const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons:
       <div className="flex flex-row justify-between items-center w-full">
         <div className={'logo-and-tabs'}>
           <a href={logoHref}>
-            <Logo/>
-            {/*<img*/}
-            {/*  src={logo}*/}
-            {/*  width="180"*/}
-            {/*  className="cursor-pointer logo-large"*/}
-            {/*  alt="mmpro logo"*/}
-            {/*/>*/}
-            {/*<img*/}
-            {/*  src={logoSmall}*/}
-            {/*  width="180"*/}
-            {/*  className="cursor-pointer logo-small"*/}
-            {/*  alt="mmpro logo"*/}
-            {/*/>*/}
+            <img
+              src={Logo}
+              className="cursor-pointer logo-large"
+              alt="mmpro logo"
+            />
+            <img
+              src={LogoSmall}
+              className="cursor-pointer logo-small"
+              alt="mmpro logo"
+            />
           </a>
           <div className={'tabs'}>
             {(pages !== undefined && pages.length > 0) &&

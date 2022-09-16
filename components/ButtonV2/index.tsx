@@ -1,19 +1,40 @@
 import React from "react";
 import './index.css'
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 type ButtonV2PropType = {
   isValid: boolean,
   onClick: () => void,
-  children: React.ReactNode | string
+  children: React.ReactNode | string,
+  outlined?: boolean,
+  className?: string
 }
 
 const ButtonV2DefaultProps = {
   isLoading: false,
   isValid: false,
+  outlined: false
 }
 
 const Button = styled.button<ButtonV2PropType>`
+  
+  ${({ outlined, isValid }) =>
+          outlined &&
+          css`
+            background: none;
+            border: ${isValid ? "1px solid #04C35C " : "1px solid rgba(24, 24, 51, .5)"};
+            color: ${isValid ? "#04C35C" : "rgba(24, 24, 51, .5)"};
+            transition: border 0.3s ease;
+        `};
+
+  ${({ outlined, isValid }) =>
+          !outlined &&
+          css`
+            color: ${isValid ? "#fff" : "rgba(255, 255, 255, 0.6)"};
+            background: ${isValid ? "#04C35C" : "rgba(0, 0, 0, 0.2)"};
+            transition: background 0.3s ease;
+        `};
+  
   position: relative;
   display: flex;
   align-items: center;
@@ -23,11 +44,8 @@ const Button = styled.button<ButtonV2PropType>`
   border-radius: 4px;
   font-weight: 600;
   font-size: 16px;
-  color: ${p => p.isValid ? "#fff" : "rgba(255, 255, 255, 0.6)"};
-  background: ${p => p.isValid ? "#04C35C" : "rgba(0, 0, 0, 0.2)"};
   outline: none;
-  transition: background 0.3s ease;
-
+  
   &:focus,
   &:active {
     outline: none;
@@ -35,12 +53,14 @@ const Button = styled.button<ButtonV2PropType>`
 `;
 
 const ButtonV2 = (props: ButtonV2PropType) => {
-  const {isValid, onClick, children} = props;
+  const {isValid, onClick, children, outlined, className} = props;
   return (
     <Button
       type={"button"}
       onClick={onClick}
       isValid={isValid}
+      outlined={outlined}
+      className={className}
     >
       {children}
     </Button>
