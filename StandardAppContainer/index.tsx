@@ -13,7 +13,7 @@ import UserDataContext from "../UserDataContext";
 import "./index.css";
 import "../styles.scss";
 import {ConfigProvider} from "antd";
-import WalletConnectorBubbleContext from "Standard/WalletConnectorBubbleContext";
+import WalletConnectorBubbleContext from "../WalletConnectorBubbleContext";
 import styled from "styled-components";
 import {HeaderButton} from "../components/WalletConnector";
 
@@ -69,10 +69,8 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     fetch(getUserDataUrl, requestOptions)
       .then(res => res.json())
       .then(json => {
-        if (json.data && json.data.isVerified) {
+        if(json && json.data && json.data.isVerified){
           setIsUserVerified(json.data.isVerified)
-        } else {
-          setIsUserVerified(false)
         }
       });
   }
