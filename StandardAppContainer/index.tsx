@@ -125,7 +125,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
                 />
                 <div className={"children-container"}>
                   {props.children}
-                  {/*<Footer version={version}/>*/}
+                  <Footer version={version}/>
                 </div>
               </div>
             </NotificationContext.Provider>
