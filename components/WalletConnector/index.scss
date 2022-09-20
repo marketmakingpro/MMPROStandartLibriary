@@ -18,8 +18,8 @@
   display: flex;
   color: black;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
   gap: 8px;
   border-radius: 25px !important;
   padding: 8px !important;
@@ -27,6 +27,10 @@
   overflow: hidden;
   height: 46px;
   z-index: 1;
+}
+
+.wallet-button.not-connected {
+  color: white;
 }
 
 .swoosh {
@@ -56,6 +60,10 @@
   padding-left: 0px !important;
 }
 
+.wallet-button.not-connected.open{
+  color: black;
+}
+
 .wallet-button.not-connected.open:hover {
   background: white;
 }
@@ -66,6 +74,8 @@
   background: white;
   border-radius: 22px 22px 0 0 !important;
   height: calc(46px + 10px);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.15);
+
 }
 
 .connect-title {
@@ -113,6 +123,7 @@
 
 .connect-wallet-flex.open {
   transition: all 0.2s 0.3s ease-out;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 
   transform: scaleY(1);
 }

@@ -184,7 +184,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
           </div>
         }
         {!active &&
-          <div className={'connect-wallet-flex'}>
+          <div className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''}`}>
             <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>
               <div
                 className={`connection-button`}
