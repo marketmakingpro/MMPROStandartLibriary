@@ -67,7 +67,7 @@ const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons:
 
         <div className={'control-strip'}>
           {headerButtons &&
-            headerButtons.map(button => button)
+            headerButtons.map(button => <div key={button.key}>{button}</div>)
           }
           {locales.length > 1 &&
             <LocaleSelector locales={locales}/>
