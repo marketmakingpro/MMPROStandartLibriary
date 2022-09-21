@@ -4,28 +4,28 @@ import styled from "styled-components";
 
 const BlueGreenGradientCircle = styled.div`
   position: absolute;
-  width: 948px;
-  height: 948px;
+  width: 55%;
+  padding-bottom: 55%;
   background: linear-gradient(228.62deg, #5790FF 12.13%, #A5FDC3 94.47%);
   opacity: 0.6;
-  left: -239px;
-  top: 395px;
+  left: -20%;
+  top: 33%;
   z-index: 0;
   border-radius: 50%;
-  filter: blur(162px);
+  filter: blur(50px);
 `
 
 const PurpleBlueGradientCircle = styled.div`
   position: absolute;
-  width: 892px;
-  height: 892px;
-  right: -239px;
-  top: 1000px;
+  width: 50%;
+  padding-bottom: 50%;
+  right: -15%;
+  top: 60%;
   background: linear-gradient(133.46deg, #5790FF 14.79%, rgba(165, 36, 226, 0) 103.42%);
   opacity: 0.6;
   z-index: 0;
   border-radius: 50%;
-  filter: blur(162px);
+  filter: blur(50px);
 `
 
 const DecorationContainer = styled.div`

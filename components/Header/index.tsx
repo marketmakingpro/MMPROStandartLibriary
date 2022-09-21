@@ -17,7 +17,11 @@ const HeaderContainer = styled.div`
   min-width: 340px;
   z-index: 5;
   padding: 16px;
-  border-bottom: 1px solid #181833;
+  height: 80px;
+  position: fixed;
+  width: 100vw;
+  background: rgb(255, 255, 255);
+  top: 0;
 `
 
 const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons: HeaderButton[], logoHref?: string, hideWalletConnector?: boolean, locales: string[], pages?: { title: string, url: string }[] }) => {
