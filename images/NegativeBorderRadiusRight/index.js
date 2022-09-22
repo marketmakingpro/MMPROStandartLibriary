@@ -6,8 +6,9 @@ import React from 'react';
 
 export default () => {
     return (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 19C10.9411 19 19 10.9411 19 1V0V18L19.5 19.5L18 19H0H1Z" fill="#606274"/>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31 0H32V32H0V31V31C17.1208 31 31 17.1208 31 0V0Z" fill="white"/>
+        <path d="M0 31V31C16.9237 31 30.7189 17.4254 30.9919 0.503965L31 0H32V0C32 17.6731 17.6731 32 0 32V32V31Z" fill="#E8E8EB"/>
       </svg>
     );
 };

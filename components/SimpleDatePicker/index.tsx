@@ -24,7 +24,8 @@ interface SimpleDatePickerPropType {
   value: string | undefined
   required?: boolean
   placeholder?: string
-  displayAsLabel?: boolean
+  displayAsLabel?: boolean,
+  className?: string
 }
 
 const SimpleDatePickerDefaultProps = {
@@ -51,7 +52,8 @@ const SimpleDatePicker = (props: SimpleDatePickerPropType) => {
     value,
     required,
     placeholder,
-    displayAsLabel
+    displayAsLabel,
+    className
   } = props;
 
   const {locale} = useContext(LocaleContext)
@@ -69,22 +71,22 @@ const SimpleDatePicker = (props: SimpleDatePickerPropType) => {
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(dateFormatRegexp.test(e.target.value)){
+    if (dateFormatRegexp.test(e.target.value)) {
       onChangeInner(e.target.value)
     }
   }
 
-  useEffect(()=>{
-    if(id){
+  useEffect(() => {
+    if (id) {
       const input = document.getElementById(id)
-      if(input){
+      if (input) {
         // @ts-ignore
         input.addEventListener("input", onInputChange)
       }
 
-      return ()=>{
+      return () => {
         const input = document.getElementById(id)
-        if(input){
+        if (input) {
           // @ts-ignore
           input.removeEventListener("input", onInputChange)
         }
@@ -95,28 +97,34 @@ const SimpleDatePicker = (props: SimpleDatePickerPropType) => {
   return (
     <div className={"input-container"}>
       {displayAsLabel &&
-          <input
-              disabled
-              className={`SimpleInput SimpleDatePicker ${shouldDisplayAsValid ? "" : "not-valid"} ${displayAsLabel ? 'display-as-label' : ''}`}
-              value={value}
-          />
+        <input
+          disabled
+          className={`SimpleInput SimpleDatePicker ${shouldDisplayAsValid ? "" : "not-valid"} ${displayAsLabel ? 'display-as-label' : ''}`}
+          value={value}
+        />
       }
       {!displayAsLabel &&
-          <>
-            <DatePicker
-                className={`SimpleInput SimpleDatePicker ${shouldDisplayAsValid ? "" : "not-valid"} ${displayAsLabel ? 'display-as-label' : ''}`}
-                onChange={(date, dateString) => onChangeInner(dateString)}
-                showToday={false}
-                value={value ? moment(value, dateFormat) : undefined}
-                format={dateFormat}
-                autoComplete={autoComplete}
-                placeholder={placeholder}
-                id={id}
-            />
-            <div className={`validation-error-tooltip ${shouldDisplayAsValid ? "" : "active"}`}>
-              {(required && value === "") ? `${localized(texts.fieldIsRequired, locale)}` : errorTooltipText}
-            </div>
-          </>
+        <>
+          <DatePicker
+            className={`
+              SimpleInput 
+              SimpleDatePicker 
+              ${shouldDisplayAsValid ? "" : "not-valid"} 
+              ${displayAsLabel ? 'display-as-label' : ''}
+              ${className || ""}
+           `}
+            onChange={(date, dateString) => onChangeInner(dateString)}
+            showToday={false}
+            value={value ? moment(value, dateFormat) : undefined}
+            format={dateFormat}
+            autoComplete={autoComplete}
+            placeholder={placeholder}
+            id={id}
+          />
+          <div className={`validation-error-tooltip ${shouldDisplayAsValid ? "" : "active"}`}>
+            {(required && value === "") ? `${localized(texts.fieldIsRequired, locale)}` : errorTooltipText}
+          </div>
+        </>
       }
     </div>
   );

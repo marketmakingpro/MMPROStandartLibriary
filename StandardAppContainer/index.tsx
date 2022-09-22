@@ -46,6 +46,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   const [notificationIcon, setNotificationIcon] = useState<ReactNode>(null)
   const [bubbleValue, setBubbleValue] = useState('');
   const [isUserVerified, setIsUserVerified] = useState(false)
+  const [isUserSubmitted, setIsUserSubmitted] = useState(false)
 
   useConnectionCheck();
 
@@ -60,7 +61,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   };
 
   async function getUserVerification() {
-    const getUserDataUrl = `https://back2.kyc.marketmaking.pro/api/validation?wallet=${account}`;
+    const getUserDataUrl = `https://mmpro-kyc-backend.herokuapp.com/api/validation?wallet=${account}`;
 
     const requestOptions = {
       method: "GET",
@@ -70,10 +71,15 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     fetch(getUserDataUrl, requestOptions)
       .then(res => res.json())
       .then(json => {
-        if(json && json.data){
+        if(json && json.data && json.data.isVerified){
           setIsUserVerified(json.data.isVerified)
-          Sentry.setContext("User KYC Data", json.data);
+          setIsUserSubmitted(json.data.isSubmitted)
+        } else {
+          setIsUserVerified(false)
+          setIsUserSubmitted(json.data.isSubmitted)
         }
+      })
+      .catch(e => {
       });
   }
 
@@ -103,7 +109,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     // @ts-ignore
     <ConfigProvider getPopupContainer={trigger => trigger.parentElement}>
       <LocaleContext.Provider value={{setLocale, locale}}>
-        <UserDataContext.Provider value={{isUserVerified}}>
+        <UserDataContext.Provider value={{isUserVerified, isUserSubmitted}}>
           <WalletConnectorBubbleContext.Provider value={{
             setBubbleValue: setBubbleValue,
             bubbleValue: bubbleValue,
@@ -113,7 +119,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
                 displayNotification
               }}
             >
-              <div className={`main-content-container ${isDarkBG ? "main-gradient" : "main-gradient-light"}`}>
+              <div className={`main-content-container main-background`}>
                 <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
                   <TitleWrapper>
                     {notificationIcon}
