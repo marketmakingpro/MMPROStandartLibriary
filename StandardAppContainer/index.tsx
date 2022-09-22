@@ -77,6 +77,9 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
           setIsUserVerified(false)
           setIsUserSubmitted(json.data.isSubmitted)
         }
+      })
+      .catch(e => {
+
       });
   }
 
