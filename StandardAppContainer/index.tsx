@@ -30,7 +30,7 @@ const TitleWrapper = styled.div`
   margin-bottom: 10px;
 `
 
-const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], logoHref?: string, connectorButtons: HeaderButton[], hideWalletConnector?: boolean, children: any, locales: string[], isDarkBG?: boolean, version: string, pages?: { title: string, url: string }[] }) => {
+const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], logoHref?: string, connectorButtons?: HeaderButton[], hideWalletConnector?: boolean, children: any, locales: string[], isDarkBG?: boolean, version: string, pages?: { title: string, url: string }[] }) => {
   const {locales, isDarkBG, version, pages, logoHref, hideWalletConnector, connectorButtons, headerButtons} = props;
 
   let forcedLocale;

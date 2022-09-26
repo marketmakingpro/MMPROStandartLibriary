@@ -18,7 +18,7 @@ import button from "../Button";
 import WarningCircle from '../../icons/WarningCircle';
 import PersonalData from '../../icons/PersonalData';
 
-export type HeaderButton = ((props: { onClick: () => void; }) => JSX.Element)
+export type HeaderButton = React.ReactElement
 // CONSTANTS
 
 // DEFAULT FUNCTIONS
@@ -133,53 +133,55 @@ const WalletConnector = (props: WalletConnectorPropType) => {
           <div
             className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''} ${(active) ? 'connected' : 'not-connected'} `}>
             <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>
-              <button
-                className={`connection-button`}
-                onClick={() => {
-                  copyTextToClipboard(`${account}`)
-                }}
-              >
-                <div style={{marginRight: 16}}/>
-                <div style={{marginRight: 12}}/>
-                <HidingText defaultText={truncate(`${account}`)} hidingText={`${localized(texts.copied, locale)}!`}
-                            peekOut={isCopyShowing}/>
-              </button>
-              <button
-                className={`connection-button`}
-                style={{paddingLeft: 0, paddingRight: 0}}
-                // onClick={() => {
-                //   window.open('https://kyc-7pb.pages.dev/', '_blank')
-                //   setIsConnectorOpen(false)
-                // }}
-              >
-                <div className={'bordered'}>
-                  {/*{isUserVerified ? <PersonalData/> : <WarningCircle/>}*/}
-                  <WarningCircle/>
-                  <div style={{marginRight: 12}}/>
-                  {/*{isUserVerified ? localized(texts.personalData, locale) : localized(texts.verifyPersonalData, locale)}*/}
-                  {localized(texts.KYCComingSoon, locale)}
-                  <div style={{marginRight: 12}}/>
-                </div>
-              </button>
-              {buttons.map((item, index) => {
-                const Component = item
-                return (
-                  <Component key={index} onClick={onClickConnectorButton}/>
-                )
-              })
+              {/*<button*/}
+              {/*  className={`connection-button`}*/}
+              {/*  onClick={() => {*/}
+              {/*    copyTextToClipboard(`${account}`)*/}
+              {/*  }}*/}
+              {/*>*/}
+              {/*  <div style={{marginRight: 16}}/>*/}
+              {/*  <div style={{marginRight: 12}}/>*/}
+              {/*  <HidingText defaultText={truncate(`${account}`)} hidingText={`${localized(texts.copied, locale)}!`}*/}
+              {/*              peekOut={isCopyShowing}/>*/}
+              {/*</button>*/}
+              {/*<button*/}
+              {/*  className={`connection-button`}*/}
+              {/*  style={{paddingLeft: 0, paddingRight: 0}}*/}
+              {/*  // onClick={() => {*/}
+              {/*  //   window.open('https://kyc-7pb.pages.dev/', '_blank')*/}
+              {/*  //   setIsConnectorOpen(false)*/}
+              {/*  // }}*/}
+              {/*>*/}
+              {/*  <div className={'bordered'}>*/}
+              {/*    /!*{isUserVerified ? <PersonalData/> : <WarningCircle/>}*!/*/}
+              {/*    <WarningCircle/>*/}
+              {/*    <div style={{marginRight: 12}}/>*/}
+              {/*    /!*{isUserVerified ? localized(texts.personalData, locale) : localized(texts.verifyPersonalData, locale)}*!/*/}
+              {/*    {localized(texts.KYCComingSoon, locale)}*/}
+              {/*    <div style={{marginRight: 12}}/>*/}
+              {/*  </div>*/}
+              {/*</button>*/}
+              {
+                buttons.map((item, index) => {
+                  return (
+                    <div key={index} onClick={onClickConnectorButton} style={{width: '100%'}}>
+                      {item}
+                    </div>
+                  )
+                })
               }
-              <button
-                className="connection-button"
-                // style={{color: 'red', fontWeight: 'bold'}}
-                onClick={disconect}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="1" y="1" width="14" height="14" rx="7" stroke="currentColor" strokeWidth="2"/>
-                  <rect x="2" y="3.41431" width="2" height="15" transform="rotate(-45 2 3.41431)" fill="currentColor"/>
-                </svg>
-                <div style={{marginRight: 12}}/>
-                {localized(texts.disconnectWallet, locale)}
-              </button>
+              {/*<button*/}
+              {/*  className="connection-button"*/}
+              {/*  // style={{color: 'red', fontWeight: 'bold'}}*/}
+              {/*  onClick={disconect}*/}
+              {/*>*/}
+              {/*  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+              {/*    <rect x="1" y="1" width="14" height="14" rx="7" stroke="currentColor" strokeWidth="2"/>*/}
+              {/*    <rect x="2" y="3.41431" width="2" height="15" transform="rotate(-45 2 3.41431)" fill="currentColor"/>*/}
+              {/*  </svg>*/}
+              {/*  <div style={{marginRight: 12}}/>*/}
+              {/*  {localized(texts.disconnectWallet, locale)}*/}
+              {/*</button>*/}
             </div>
           </div>
         }

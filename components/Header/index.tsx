@@ -24,7 +24,7 @@ const HeaderContainer = styled.div`
   top: 0;
 `
 
-const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons: HeaderButton[], logoHref?: string, hideWalletConnector?: boolean, locales: string[], pages?: { title: string, url: string }[] }) => {
+const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons?: HeaderButton[], logoHref?: string, hideWalletConnector?: boolean, locales: string[], pages?: { title: string, url: string }[] }) => {
   const {locales, pages, logoHref, hideWalletConnector, headerButtons, connectorButtons} = props
   const [selectedPage, setSelectedPage] = useState(pages ? pages[0].url : '')
 
@@ -76,7 +76,7 @@ const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons:
           {locales.length > 1 &&
             <LocaleSelector locales={locales}/>
           }
-          {!hideWalletConnector &&
+          {!hideWalletConnector && connectorButtons &&
             <WalletConnector buttons={connectorButtons}/>
           }
         </div>
