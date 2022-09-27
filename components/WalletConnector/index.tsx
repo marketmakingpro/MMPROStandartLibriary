@@ -2,48 +2,31 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import texts from './localization'
 import LocaleContext from "../../LocaleContext";
 import {localized} from "../../utils/localized";
-import Button from "../Button";
 import MetamaskJazzicon from "../MetamaskJazzicon";
-import {HidingText} from "../HidingText";
 import {useWeb3React} from "@web3-react/core";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import './index.scss'
 import {injected, switchNetwork, walletconnect} from "../../wallet";
 import Swoosh from '../../images/NegativeBorderRadiusRight'
 import WalletConnectorBubbleContext from "../../WalletConnectorBubbleContext";
-import NotificationContext from "../../utils/NotificationContext";
 import UserDataContext from "../../UserDataContext";
-import DisconnectWallletIcon from '../../icons/notificationIcon/index'
 import button from "../Button";
-import WarningCircle from '../../icons/WarningCircle';
-import PersonalData from '../../icons/PersonalData';
-
-export type HeaderButton = React.ReactElement
-// CONSTANTS
-
-// DEFAULT FUNCTIONS
-
-// TODO: copy this components directory and add your content to make your page
+import {HeaderButton} from '../../types'
 
 type WalletConnectorPropType = {
-  // You should declare props like this, delete this if you don't need props
   buttons: HeaderButton[]
 }
 
-const WalletConnectorDefaultProps = {
-  // You should declare default props like this, delete this if you don't need props
-}
+const WalletConnectorDefaultProps = {}
 
 const WalletConnector = (props: WalletConnectorPropType) => {
   const {locale} = useContext(LocaleContext)
   const {bubbleValue} = useContext(WalletConnectorBubbleContext)
-  const notificationContext = useContext(NotificationContext)
   const {isUserVerified} = useContext(UserDataContext)
   const {chainId, account, deactivate, activate, active, connector, error} = useWeb3React();
   const ref = useRef(null);
   const {buttons} = props
   const [isConnectorOpen, setIsConnectorOpen] = useState(false)
-  const [isCopyShowing, setIsCopyShowing] = useState(false)
 
   useOnClickOutside(ref, () => setIsConnectorOpen(false))
 
@@ -54,28 +37,6 @@ const WalletConnector = (props: WalletConnectorPropType) => {
     }
   }
 
-  function disconect() {
-    setIsConnectorOpen(!isConnectorOpen)
-    // @ts-ignore
-    if (connector && connector.walletConnectProvider) {
-      deactivate();
-    } else {
-      notificationContext.displayNotification(
-        localized(texts.metamaskWalletDisconnectNotificationTitle, locale),
-        localized(texts.metamaskWalletDisconnectNotificationSubtitle, locale),
-        <DisconnectWallletIcon/>
-      )
-    }
-    setIsConnectorOpen(false)
-  }
-
-  function truncate(str: string) {
-    return str.length > 0
-      ? str.substr(0, 8) + "..." + str.substr(str.length - 8, str.length - 1)
-      : str;
-  }
-
-
   useEffect(() => {
     const initNetwork = async () => {
       if (56 !== chainId) {
@@ -84,18 +45,6 @@ const WalletConnector = (props: WalletConnectorPropType) => {
     };
     initNetwork();
   }, [active, chainId, error]);
-
-  async function copyTextToClipboard(text: string) {
-    setIsCopyShowing(true)
-    setTimeout(() => {
-      setIsCopyShowing(false)
-    }, 1500)
-    if ('clipboard' in navigator) {
-      return await navigator.clipboard.writeText(text);
-    } else {
-      return document.execCommand('copy', true, text);
-    }
-  }
 
   const onClickConnectorButton = () => {
     setIsConnectorOpen(false)
@@ -133,55 +82,15 @@ const WalletConnector = (props: WalletConnectorPropType) => {
           <div
             className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''} ${(active) ? 'connected' : 'not-connected'} `}>
             <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>
-              {/*<button*/}
-              {/*  className={`connection-button`}*/}
-              {/*  onClick={() => {*/}
-              {/*    copyTextToClipboard(`${account}`)*/}
-              {/*  }}*/}
-              {/*>*/}
-              {/*  <div style={{marginRight: 16}}/>*/}
-              {/*  <div style={{marginRight: 12}}/>*/}
-              {/*  <HidingText defaultText={truncate(`${account}`)} hidingText={`${localized(texts.copied, locale)}!`}*/}
-              {/*              peekOut={isCopyShowing}/>*/}
-              {/*</button>*/}
-              {/*<button*/}
-              {/*  className={`connection-button`}*/}
-              {/*  style={{paddingLeft: 0, paddingRight: 0}}*/}
-              {/*  // onClick={() => {*/}
-              {/*  //   window.open('https://kyc-7pb.pages.dev/', '_blank')*/}
-              {/*  //   setIsConnectorOpen(false)*/}
-              {/*  // }}*/}
-              {/*>*/}
-              {/*  <div className={'bordered'}>*/}
-              {/*    /!*{isUserVerified ? <PersonalData/> : <WarningCircle/>}*!/*/}
-              {/*    <WarningCircle/>*/}
-              {/*    <div style={{marginRight: 12}}/>*/}
-              {/*    /!*{isUserVerified ? localized(texts.personalData, locale) : localized(texts.verifyPersonalData, locale)}*!/*/}
-              {/*    {localized(texts.KYCComingSoon, locale)}*/}
-              {/*    <div style={{marginRight: 12}}/>*/}
-              {/*  </div>*/}
-              {/*</button>*/}
               {
                 buttons.map((item, index) => {
                   return (
-                    <div key={index} onClick={onClickConnectorButton} style={{width: '100%'}}>
+                    <div key={index} onClick={onClickConnectorButton} style={{minWidth: 210}}>
                       {item}
                     </div>
                   )
                 })
               }
-              {/*<button*/}
-              {/*  className="connection-button"*/}
-              {/*  // style={{color: 'red', fontWeight: 'bold'}}*/}
-              {/*  onClick={disconect}*/}
-              {/*>*/}
-              {/*  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
-              {/*    <rect x="1" y="1" width="14" height="14" rx="7" stroke="currentColor" strokeWidth="2"/>*/}
-              {/*    <rect x="2" y="3.41431" width="2" height="15" transform="rotate(-45 2 3.41431)" fill="currentColor"/>*/}
-              {/*  </svg>*/}
-              {/*  <div style={{marginRight: 12}}/>*/}
-              {/*  {localized(texts.disconnectWallet, locale)}*/}
-              {/*</button>*/}
             </div>
           </div>
         }

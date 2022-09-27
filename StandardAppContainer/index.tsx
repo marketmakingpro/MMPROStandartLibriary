@@ -10,13 +10,48 @@ import {useLocale} from "../hooks/useLocale";
 import LocaleContext from "../LocaleContext";
 import NotificationContext from "../utils/NotificationContext";
 import UserDataContext from "../UserDataContext";
+import ServerNotificationContext from "../ServerNotificationContext";
 import "./index.css";
 import "../styles.scss";
 import {ConfigProvider} from "antd";
 import WalletConnectorBubbleContext from "../WalletConnectorBubbleContext";
 import styled from "styled-components";
-import {HeaderButton} from "../components/WalletConnector";
+import {HeaderButton, IPage} from "../types";
 import * as Sentry from "@sentry/react";
+import {NavItems} from "../../types";
+import ServerNotificationItem from "../components/ServerNotifications/ServerNotificationItem";
+import ServerNotifications from "../components/ServerNotifications";
+
+const mockServerNotifications = [
+  {
+    id: 1,
+    title: "KYC Verification update required",
+    body: "Please update your personal data in KYC to continue using our products"
+  },
+  {
+    id: 2,
+    title: "Все",
+    body: "Повесточка пришла"
+  },
+  {
+    id: 3,
+    title: "KYC Verification update required",
+    body: "Please update your personal data in KYC to continue using our products"
+  },
+]
+
+type StandardAppContainerProps = {
+  headerButtons?: React.ReactElement[],
+  logoHref?: string,
+  connectorButtons?: HeaderButton[],
+  hideWalletConnector?: boolean,
+  children: any,
+  locales: string[],
+  isDarkBG?: boolean,
+  version: string,
+  pages?: IPage[],
+  headerNavigation?: NavItems[]
+}
 
 const defaultProps = {
   locales: ["en"]
@@ -30,8 +65,18 @@ const TitleWrapper = styled.div`
   margin-bottom: 10px;
 `
 
-const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], logoHref?: string, connectorButtons?: HeaderButton[], hideWalletConnector?: boolean, children: any, locales: string[], isDarkBG?: boolean, version: string, pages?: { title: string, url: string }[] }) => {
-  const {locales, isDarkBG, version, pages, logoHref, hideWalletConnector, connectorButtons, headerButtons} = props;
+const StandardAppContainer = (props: StandardAppContainerProps) => {
+  const {
+    locales,
+    isDarkBG,
+    version,
+    pages,
+    logoHref,
+    hideWalletConnector,
+    connectorButtons,
+    headerButtons,
+    headerNavigation
+  } = props;
 
   let forcedLocale;
   if (locales.length === 1) {
@@ -47,6 +92,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   const [bubbleValue, setBubbleValue] = useState('');
   const [isUserVerified, setIsUserVerified] = useState(false)
   const [isUserSubmitted, setIsUserSubmitted] = useState(false)
+  const [isServerNotificationActive, setIsServerNotificationActive] = useState(false)
 
   useConnectionCheck();
 
@@ -61,7 +107,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   };
 
   async function getUserVerification() {
-    const getUserDataUrl = `https://mmpro-kyc-backend.herokuapp.com/api/validation?wallet=${account}`;
+    const getUserDataUrl = `http://134.209.181.150:7002/api/validation?wallet=${account}`;
 
     const requestOptions = {
       method: "GET",
@@ -71,7 +117,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     fetch(getUserDataUrl, requestOptions)
       .then(res => res.json())
       .then(json => {
-        if(json && json.data && json.data.isVerified){
+        if (json && json.data && json.data.isVerified) {
           setIsUserVerified(json.data.isVerified)
           setIsUserSubmitted(json.data.isSubmitted)
         } else {
@@ -94,12 +140,12 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   useEffect(() => {
     if (account) {
       getUserVerification()
-      Sentry.setUser({ wallet: account });
+      Sentry.setUser({wallet: account});
       Sentry.setTag("wallet", account);
       // @ts-ignore
-      if(connector.walletConnectProvider){
+      if (connector.walletConnectProvider) {
         Sentry.setTag("connection method", "Wallet Connect");
-      }else{
+      } else {
         Sentry.setTag("connection method", "Metamask");
       }
     }
@@ -114,37 +160,46 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
             setBubbleValue: setBubbleValue,
             bubbleValue: bubbleValue,
           }}>
-            <NotificationContext.Provider
-              value={{
-                displayNotification
-              }}
-            >
-              <div className={`main-content-container main-background`}>
-                <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
-                  <TitleWrapper>
-                    {notificationIcon}
-                    <div className={"notification-title"}>
-                      {notificationTitle}
+            <ServerNotificationContext.Provider value={{
+              isNotificationsActive: isServerNotificationActive,
+              setIsNotificationsActive: setIsServerNotificationActive
+            }}>
+              <NotificationContext.Provider
+                value={{
+                  displayNotification
+                }}
+              >
+                <div className={`main-content-container main-background`}>
+                  <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
+                    <TitleWrapper>
+                      {notificationIcon}
+                      <div className={"notification-title"}>
+                        {notificationTitle}
+                      </div>
+                    </TitleWrapper>
+                    <div className={"notification-body"}>
+                      {notificationSubtitle}
                     </div>
-                  </TitleWrapper>
-                  <div className={"notification-body"}>
-                    {notificationSubtitle}
+                  </div>
+                  {isServerNotificationActive &&
+                    <ServerNotifications notifications={mockServerNotifications}/>
+                  }
+                  <Header
+                    headerNavigation={headerNavigation}
+                    connectorButtons={connectorButtons}
+                    logoHref={logoHref}
+                    hideWalletConnector={hideWalletConnector}
+                    pages={pages}
+                    locales={locales}
+                    headerButtons={headerButtons}
+                  />
+                  <div className={"children-container"}>
+                    {props.children}
+                    <Footer version={version}/>
                   </div>
                 </div>
-                <Header
-                  connectorButtons={connectorButtons}
-                  logoHref={logoHref}
-                  hideWalletConnector={hideWalletConnector}
-                  pages={pages}
-                  locales={locales}
-                  headerButtons={headerButtons}
-                />
-                <div className={"children-container"}>
-                  {props.children}
-                  <Footer version={version}/>
-                </div>
-              </div>
-            </NotificationContext.Provider>
+              </NotificationContext.Provider>
+            </ServerNotificationContext.Provider>
           </WalletConnectorBubbleContext.Provider>
         </UserDataContext.Provider>
       </LocaleContext.Provider>

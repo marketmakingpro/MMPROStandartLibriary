@@ -1,11 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import './index.css'
 import Logo from '../../icons/MMPROLogo/preview.svg';
 import LogoSmall from '../../icons/SmallMMPROLogo/preview.svg'
 import {LocaleSelector} from "../LocaleSelector";
 import {Link} from "react-router-dom";
-import WalletConnector, {HeaderButton} from "../WalletConnector";
+import WalletConnector from "../WalletConnector";
 import styled from 'styled-components'
+import {useCookies} from "react-cookie";
+import {HeaderButton, IPage} from "../../types";
+import {NavItems} from "../../../types";
+
+type HeaderProps = {
+  headerButtons?: React.ReactElement[],
+  connectorButtons?: HeaderButton[],
+  logoHref?: string,
+  hideWalletConnector?: boolean,
+  locales: string[],
+  pages?: IPage[],
+  headerNavigation?: NavItems[]
+}
 
 const HeaderDefaultProps = {
   logoHref: 'https://marketmaking.pro/'
@@ -24,18 +37,62 @@ const HeaderContainer = styled.div`
   top: 0;
 `
 
-const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons?: HeaderButton[], logoHref?: string, hideWalletConnector?: boolean, locales: string[], pages?: { title: string, url: string }[] }) => {
-  const {locales, pages, logoHref, hideWalletConnector, headerButtons, connectorButtons} = props
+const NavContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+`
+
+const LogoAndTabs = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  min-width: 200px;
+`
+
+const ControlStrip = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px
+`
+
+const Header = (props: HeaderProps) => {
+
+  const {
+    locales,
+    pages,
+    logoHref,
+    hideWalletConnector,
+    headerButtons,
+    connectorButtons,
+    headerNavigation
+  } = props
+
   const [selectedPage, setSelectedPage] = useState(pages ? pages[0].url : '')
+
+  const [cookies] = useCookies(["auth"])
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
     setSelectedPage(window.location.pathname)
   }, [])
 
+  useEffect(() => {
+    if (cookies.auth) {
+      setIsUserLoggedIn(true)
+    } else {
+      setIsUserLoggedIn(false)
+    }
+  }, [cookies])
+
   return (
     <HeaderContainer>
       <div className="flex flex-row justify-between items-center w-full">
-        <div className={'logo-and-tabs'}>
+        <LogoAndTabs>
           <a href={logoHref}>
             <img
               src={Logo}
@@ -67,19 +124,25 @@ const Header = (props: { headerButtons?: React.ReactElement[], connectorButtons?
               </>
             }
           </div>
-        </div>
+        </LogoAndTabs>
 
-        <div className={'control-strip'}>
-          {headerButtons &&
-            headerButtons.map(button => <div key={button.key}>{button}</div>)
+        <NavContainer>
+          {headerNavigation && isUserLoggedIn &&
+            headerNavigation.map((nav, index) => <div key={index}>{nav}</div>)
+          }
+        </NavContainer>
+
+        <ControlStrip>
+          {headerButtons && isUserLoggedIn &&
+            headerButtons.map((button, index) => <div key={index}>{button}</div>)
+          }
+          {!hideWalletConnector && connectorButtons && isUserLoggedIn &&
+            <WalletConnector buttons={connectorButtons}/>
           }
           {locales.length > 1 &&
             <LocaleSelector locales={locales}/>
           }
-          {!hideWalletConnector && connectorButtons &&
-            <WalletConnector buttons={connectorButtons}/>
-          }
-        </div>
+        </ControlStrip>
       </div>
     </HeaderContainer>
   );

@@ -7,7 +7,7 @@ import { injected, walletconnect, switchNetwork } from "../../wallet";
 
 export default function ConnectModal(props) {
   const { chainId, activate, active, error } = useWeb3React();
-  const { opened, closeHandle, setError } = props;
+  const { opened, closeHandle } = props;
 
   useEffect(() => {
     const initNetwork = async () => {
