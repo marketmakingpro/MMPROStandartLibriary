@@ -1,9 +1,10 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import ServerNotificationIcon from "../../../icons/ServerNotification";
 import Cross from "../../../icons/Cross";
-import {StartRow, JustifyStartColumn} from "../../../styles/GlobalStyledComponents";
+import {JustifyStartColumn} from "../../../styles/GlobalStyledComponents";
 import './index.scss'
+import Text from '../../Text'
 
 type ServerNotificationItemProps = {
   handleRemove: (id: number) => void,
@@ -17,6 +18,11 @@ const CrossWrapper = styled.div`
   width: 15px;
   height: 15px;
   cursor: pointer;
+`
+
+const NotificationIconWrapper = styled.div`
+  width: 30px;
+  height: 30px;
 `
 
 const ServerNotificationItem = (props: ServerNotificationItemProps) => {
@@ -35,10 +41,12 @@ const ServerNotificationItem = (props: ServerNotificationItemProps) => {
       <CrossWrapper onClick={() => toggleNotificationActive(notification.id)}>
         <Cross />
       </CrossWrapper>
-      <ServerNotificationIcon />
+      <NotificationIconWrapper>
+        <ServerNotificationIcon />
+      </NotificationIconWrapper>
       <JustifyStartColumn>
-        <span>{notification.title}</span>
-        <span>{notification.body}</span>
+        <Text fontWeight={500} fontSize={14}>{notification.title}</Text>
+        <Text fontWeight={400} fontSize={12}>{notification.body}</Text>
       </JustifyStartColumn>
     </div>
   );

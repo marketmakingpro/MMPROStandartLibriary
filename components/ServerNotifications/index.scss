@@ -1,6 +1,19 @@
 .server-notifications-wrapper {
   z-index: 1000;
-  position: absolute;
+  position: fixed;
+}
+
+.top-right {
   top: 100px;
   right: 16px;
+  animation: notification-in-right .7s;
+}
+
+@keyframes notification-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }

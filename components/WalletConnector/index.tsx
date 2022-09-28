@@ -110,7 +110,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
                   height="30"
                   style={{marginRight: 10}}
                 />
-                <p>MetaMask</p>
+                <span>MetaMask</span>
               </div>
               <div
                 className={`connection-button`}
@@ -127,7 +127,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
                   height="30"
                   style={{marginRight: 10}}
                 />
-                <p>Wallet connect</p>
+                <span>Wallet connect</span>
               </div>
             </div>
           </div>

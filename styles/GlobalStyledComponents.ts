@@ -46,33 +46,3 @@ export const JustifyEndColumn = styled(Column)`
   justify-content: flex-end;
   align-items: center;
 `
-
-export const ButtonV3 = styled.button<{buttonStyle: 'black' | 'red' | 'green'}>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 180px;
-  height: 40px;
-  border-radius: 20px;
-
-  ${({ buttonStyle }) => buttonStyle === 'black' && css`
-    color: #181833;
-    border: 1px solid #181833;
-    background: #fff;
-  `};
-
-  ${({ buttonStyle }) => buttonStyle === 'red' && css`
-    background: #C32604;
-    color: #fff;
-  `};
-
-  ${({ buttonStyle }) => buttonStyle === 'green' && css`
-    background: #33CC66;
-    color: #fff;
-  `};
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
-`

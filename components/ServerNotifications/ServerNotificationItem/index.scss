@@ -1,18 +1,21 @@
 .notification-item-wrapper {
+  position: relative;
   opacity: 1;
   display: flex;
   justify-content: flex-start;
-  position: relative;
   padding: 18px;
   background: #FFFFFF;
   box-shadow: 0 0 27px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-bottom: 20px;
   gap: 16px;
+  transition: .3s ease;
+  width: 410px;
 }
 
 .notification-item-wrapper.closed {
   transition: opacity 0.2s;
   opacity: 0;
+  pointer-events: none;
 }
 
