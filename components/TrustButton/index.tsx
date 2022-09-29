@@ -5,9 +5,15 @@ import './index.scss';
 
 type TrustButtonProps = {
   style: 'black' | 'red' | 'green'
-  children: string,
-  rippleColor: string,
-  //onClick: (e: any) => void
+  children: React.ReactNode | string,
+  rippleColor?: string,
+  isValid?: boolean,
+  onClick?: () => void,
+}
+
+const TrustButtonDefaultProps = {
+  isValid: false,
+  rippleColor: 'rgba(0, 0, 0, 0.2)',
 }
 
 const ButtonStyled = styled.button`
@@ -20,7 +26,8 @@ const ButtonStyled = styled.button`
   overflow: hidden;
   position: relative;
   outline: none;
-
+  transition: all 0.3s ease;
+  
   &:focus,
   &:active {
     outline: none;
@@ -28,18 +35,23 @@ const ButtonStyled = styled.button`
 `;
 
 const TrustButton = (props: TrustButtonProps) => {
-  const {style, children, rippleColor} = props
+  const {style, children, rippleColor, isValid, onClick} = props
 
   return (
-    <ButtonStyled className={`
-      ${style === 'red' ? 'red-button' : ''}
-      ${style === 'black' ? 'black-button' : ''}
-      ${style === 'green' ? 'green-button' : ''}
+    <ButtonStyled
+      onClick={onClick}
+      className={`
+        ${style === 'red' ? 'red-button' : ''}
+        ${style === 'black' ? 'black-button' : ''}
+        ${style === 'green' ? 'green-button' : ''}
+        ${isValid ? '' : 'not-valid'}
     `}>
       <Ripple color={rippleColor} duration={1200}/>
       {children}
     </ButtonStyled>
   );
 };
+
+TrustButton.defaultProps = TrustButtonDefaultProps;
 
 export default TrustButton;
