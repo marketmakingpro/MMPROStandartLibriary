@@ -16,11 +16,11 @@ import "../styles.scss";
 import {ConfigProvider} from "antd";
 import WalletConnectorBubbleContext from "../WalletConnectorBubbleContext";
 import styled from "styled-components";
-import {HeaderButton, IPage} from "../types";
+import {HeaderButton} from "../types/HeaderButton";
 import * as Sentry from "@sentry/react";
-import {NavItems} from "../../types";
-import ServerNotificationItem from "../components/ServerNotifications/ServerNotificationItem";
+import {NavItems} from "../types/NavItems";
 import ServerNotifications from "../components/ServerNotifications";
+import {IPage} from "../types/Page";
 
 const mockServerNotifications = [
   {

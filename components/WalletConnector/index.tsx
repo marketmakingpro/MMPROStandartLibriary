@@ -11,7 +11,7 @@ import Swoosh from '../../images/NegativeBorderRadiusRight'
 import WalletConnectorBubbleContext from "../../WalletConnectorBubbleContext";
 import UserDataContext from "../../UserDataContext";
 import button from "../Button";
-import {HeaderButton} from '../../types'
+import {HeaderButton} from '../../types/HeaderButton'
 
 type WalletConnectorPropType = {
   buttons: HeaderButton[]

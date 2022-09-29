@@ -7,8 +7,9 @@ import {Link} from "react-router-dom";
 import WalletConnector from "../WalletConnector";
 import styled from 'styled-components'
 import {useCookies} from "react-cookie";
-import {HeaderButton, IPage} from "../../types";
-import {NavItems} from "../../../types";
+import {HeaderButton} from "../../types/HeaderButton";
+import {IPage} from '../../types/Page'
+import {NavItems} from "../../types/NavItems";
 
 type HeaderProps = {
   headerButtons?: React.ReactElement[],
