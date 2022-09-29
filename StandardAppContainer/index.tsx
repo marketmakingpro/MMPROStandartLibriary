@@ -21,8 +21,9 @@ import * as Sentry from "@sentry/react";
 import {NavItems} from "../types/NavItems";
 import ServerNotifications from "../components/ServerNotifications";
 import {IPage} from "../types/Page";
+import {INotification} from '../types/Notification';
 
-const mockServerNotifications = [
+const mockServerNotifications: INotification[] = [
   {
     id: 1,
     title: "KYC Verification update required",
@@ -35,6 +36,21 @@ const mockServerNotifications = [
   },
   {
     id: 3,
+    title: "текст",
+    body: "Please update your personal data in KYC to continue using our products"
+  },
+  {
+    id: 5,
+    title: "текст2",
+    body: "Please update your personal data in KYC to continue using our products"
+  },
+  {
+    id: 6,
+    title: "KYC Verification update required",
+    body: "Please update your personal data in KYC to continue using our products"
+  },
+  {
+    id: 7,
     title: "KYC Verification update required",
     body: "Please update your personal data in KYC to continue using our products"
   },
@@ -93,6 +109,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
   const [isUserVerified, setIsUserVerified] = useState(false)
   const [isUserSubmitted, setIsUserSubmitted] = useState(false)
   const [isServerNotificationActive, setIsServerNotificationActive] = useState(false)
+  const [notifications, setNotifications] = useState<INotification[]>(mockServerNotifications)
 
   useConnectionCheck();
 
@@ -162,7 +179,9 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
           }}>
             <ServerNotificationContext.Provider value={{
               isNotificationsActive: isServerNotificationActive,
-              setIsNotificationsActive: setIsServerNotificationActive
+              setIsNotificationsActive: setIsServerNotificationActive,
+              notifications,
+              setNotifications
             }}>
               <NotificationContext.Provider
                 value={{
@@ -182,7 +201,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
                     </div>
                   </div>
                   {isServerNotificationActive &&
-                    <ServerNotifications notifications={mockServerNotifications}/>
+                    <ServerNotifications />
                   }
                   <Header
                     headerNavigation={headerNavigation}

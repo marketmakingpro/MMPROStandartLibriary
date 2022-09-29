@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import ServerNotificationIcon from "../../../icons/ServerNotification";
 import Cross from "../../../icons/Cross";
 import {JustifyStartColumn} from "../../../styles/GlobalStyledComponents";
 import './index.scss'
 import Text from '../../Text'
+import {INotification} from "../../../types/Notification";
 
 type ServerNotificationItemProps = {
   handleRemove: (id: number) => void,
-  notification: {id: number, title: string, body: string},
+  notification: INotification,
+  isNotificationUnread: boolean
 }
 
 const CrossWrapper = styled.div`
@@ -25,8 +27,27 @@ const NotificationIconWrapper = styled.div`
   height: 30px;
 `
 
+const UnreadNotificationIcon = styled.div`
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #33CC66;
+`
+
+const UnreadNotificationIconWrapper = styled.div<{isNotificationsActive: boolean}>`
+  opacity: 1;
+
+  ${({ isNotificationsActive }) => !isNotificationsActive && css`
+    transition: opacity .2s;
+    opacity: 0;
+  `};
+`
+
 const ServerNotificationItem = (props: ServerNotificationItemProps) => {
-  const {notification, handleRemove} = props
+  const {notification, handleRemove, isNotificationUnread} = props
   const [isNotificationOpen, setIsNotificationOpen] = useState(true)
 
   const toggleNotificationActive = (id: number) => {
@@ -38,6 +59,9 @@ const ServerNotificationItem = (props: ServerNotificationItemProps) => {
 
   return (
     <div className={`notification-item-wrapper ${isNotificationOpen ? '' : 'closed'} `}>
+      <UnreadNotificationIconWrapper isNotificationsActive={isNotificationUnread}>
+        <UnreadNotificationIcon />
+      </UnreadNotificationIconWrapper>
       <CrossWrapper onClick={() => toggleNotificationActive(notification.id)}>
         <Cross />
       </CrossWrapper>
