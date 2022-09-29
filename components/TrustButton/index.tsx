@@ -13,7 +13,7 @@ type TrustButtonProps = {
 
 const TrustButtonDefaultProps = {
   isValid: false,
-  rippleColor: 'rgba(0, 0, 0, 0.2)',
+  rippleColor: 'rgba(255, 255, 255, 0.2)',
 }
 
 const ButtonStyled = styled.button`
@@ -44,7 +44,7 @@ const TrustButton = (props: TrustButtonProps) => {
         ${style === 'red' ? 'red-button' : ''}
         ${style === 'black' ? 'black-button' : ''}
         ${style === 'green' ? 'green-button' : ''}
-        ${isValid ? '' : 'not-valid'}
+        ${isValid ? '' : 'not-valid-button'}
     `}>
       <Ripple color={rippleColor} duration={1200}/>
       {children}
