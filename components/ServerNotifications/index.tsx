@@ -4,14 +4,12 @@ import './index.scss'
 import ServerNotificationContext from "../../ServerNotificationContext";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-type ServerNotificationsProps = {
-
-}
+type ServerNotificationsProps = {}
 
 const ServerNotifications = () => {
   const ref = useRef(null)
 
-  const {setIsNotificationsActive, notifications, setNotifications} = useContext(ServerNotificationContext)
+  const {setIsNotificationsActive, notifications, setNotifications, isNotificationsActive} = useContext(ServerNotificationContext)
 
   const [isNotificationUnread, setIsNotificationUnread] = useState(true)
 
@@ -20,16 +18,10 @@ const ServerNotifications = () => {
     setNotifications(newList);
   }
 
-  useEffect(() => {
-    setTimeout(() =>{
-      setIsNotificationUnread(false)
-    }, 700)
-  }, [])
-
   useOnClickOutside(ref, () => setIsNotificationsActive(false))
 
   return (
-    <div className={`server-notifications-wrapper top-right`} ref={ref}>
+    <div className={`server-notifications-wrapper ${isNotificationsActive ? 'shown' : ''}`} ref={ref}>
       {notifications.slice(0,3).map(notification => <ServerNotificationItem
         handleRemove={handleRemove}
         key={notification.id}

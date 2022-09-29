@@ -200,9 +200,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
                       {notificationSubtitle}
                     </div>
                   </div>
-                  {isServerNotificationActive &&
-                    <ServerNotifications />
-                  }
+                  <ServerNotifications/>
                   <Header
                     headerNavigation={headerNavigation}
                     connectorButtons={connectorButtons}
