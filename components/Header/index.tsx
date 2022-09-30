@@ -36,6 +36,7 @@ const HeaderContainer = styled.div`
   width: 100vw;
   background: rgb(255, 255, 255);
   top: 0;
+  border-bottom: 1px solid rgba(24,24,51, .1);
 `
 
 const NavContainer = styled.div`
@@ -43,6 +44,7 @@ const NavContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 80px;
   gap: 36px;
 `
 

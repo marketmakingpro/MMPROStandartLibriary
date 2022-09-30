@@ -37,7 +37,6 @@ const CustomText = styled.div<TextPropType>`
     font-size: ${p => p.adaptiveFontWeight}px;
     margin-bottom: ${p => p.adaptiveMarginBottom}px;
   }
-
 `
 
 const Text = (props: TextPropType) => {
