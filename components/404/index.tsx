@@ -35,7 +35,7 @@ const NoPageError = () => {
         <div className="text">
           <Text fontWeight={400} fontSize={24}>Page not found :(</Text>
           <div className='mb-4'/>
-          <TrustButton isValid style={"green"} onClick={() => history.push('/account')}>Redirect</TrustButton>
+          <TrustButton isValid style={"green"} onClick={() => history.push('/')}>Go Home!</TrustButton>
         </div>
       </div>
     </div>
