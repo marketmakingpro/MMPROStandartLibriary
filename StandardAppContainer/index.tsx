@@ -172,57 +172,55 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
   return (
     // @ts-ignore
     <ConfigProvider getPopupContainer={trigger => trigger.parentElement}>
-      <ErrorBoundary>
-        <LocaleContext.Provider value={{setLocale, locale}}>
-          <UserDataContext.Provider value={{isUserVerified, isUserSubmitted}}>
-            <WalletConnectorBubbleContext.Provider value={{
-              setBubbleValue: setBubbleValue,
-              bubbleValue: bubbleValue,
+      <LocaleContext.Provider value={{setLocale, locale}}>
+        <UserDataContext.Provider value={{isUserVerified, isUserSubmitted}}>
+          <WalletConnectorBubbleContext.Provider value={{
+            setBubbleValue: setBubbleValue,
+            bubbleValue: bubbleValue,
+          }}>
+            <ServerNotificationContext.Provider value={{
+              isNotificationsActive: isServerNotificationActive,
+              setIsNotificationsActive: setIsServerNotificationActive,
+              notifications,
+              setNotifications
             }}>
-              <ServerNotificationContext.Provider value={{
-                isNotificationsActive: isServerNotificationActive,
-                setIsNotificationsActive: setIsServerNotificationActive,
-                notifications,
-                setNotifications
-              }}>
-                <NotificationContext.Provider
-                  value={{
-                    displayNotification
-                  }}
-                >
-                  <div className={`main-content-container main-background`}>
-                    <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
-                      <TitleWrapper>
-                        {notificationIcon}
-                        <div className={"notification-title"}>
-                          {notificationTitle}
-                        </div>
-                      </TitleWrapper>
-                      <div className={"notification-body"}>
-                        {notificationSubtitle}
+              <NotificationContext.Provider
+                value={{
+                  displayNotification
+                }}
+              >
+                <div className={`main-content-container main-background`}>
+                  <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
+                    <TitleWrapper>
+                      {notificationIcon}
+                      <div className={"notification-title"}>
+                        {notificationTitle}
                       </div>
-                    </div>
-                    <ServerNotifications/>
-                    <Header
-                      headerNavigation={headerNavigation}
-                      connectorButtons={connectorButtons}
-                      logoHref={logoHref}
-                      hideWalletConnector={hideWalletConnector}
-                      pages={pages}
-                      locales={locales}
-                      headerButtons={headerButtons}
-                    />
-                    <div className={"children-container"}>
-                      {props.children}
-                      <Footer version={version}/>
+                    </TitleWrapper>
+                    <div className={"notification-body"}>
+                      {notificationSubtitle}
                     </div>
                   </div>
-                </NotificationContext.Provider>
-              </ServerNotificationContext.Provider>
-            </WalletConnectorBubbleContext.Provider>
-          </UserDataContext.Provider>
-        </LocaleContext.Provider>
-      </ErrorBoundary>
+                  <ServerNotifications/>
+                  <Header
+                    headerNavigation={headerNavigation}
+                    connectorButtons={connectorButtons}
+                    logoHref={logoHref}
+                    hideWalletConnector={hideWalletConnector}
+                    pages={pages}
+                    locales={locales}
+                    headerButtons={headerButtons}
+                  />
+                  <div className={"children-container"}>
+                    {props.children}
+                    <Footer version={version}/>
+                  </div>
+                </div>
+              </NotificationContext.Provider>
+            </ServerNotificationContext.Provider>
+          </WalletConnectorBubbleContext.Provider>
+        </UserDataContext.Provider>
+      </LocaleContext.Provider>
     </ConfigProvider>
   );
 };

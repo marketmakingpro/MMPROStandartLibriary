@@ -9,6 +9,7 @@ type TrustButtonProps = {
   rippleColor?: string,
   isValid?: boolean,
   onClick?: () => void,
+  className?: string
 }
 
 const TrustButtonDefaultProps = {
@@ -35,7 +36,7 @@ const ButtonStyled = styled.button`
 `;
 
 const TrustButton = (props: TrustButtonProps) => {
-  const {style, children, rippleColor, isValid, onClick} = props
+  const {style, children, rippleColor, isValid, onClick, className} = props
 
   return (
     <ButtonStyled
@@ -45,6 +46,7 @@ const TrustButton = (props: TrustButtonProps) => {
         ${style === 'black' ? 'black-button' : ''}
         ${style === 'green' ? 'green-button' : ''}
         ${isValid ? '' : 'not-valid-button'}
+        ${className ? `${className}` : ''} 
     `}>
       <Ripple color={rippleColor} duration={1200}/>
       {children}
