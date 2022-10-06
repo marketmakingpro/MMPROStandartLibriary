@@ -20,13 +20,13 @@ const Modal = ({children, onClose, title}) => {
     >
       <div
         ref={ref}
-        className="modal-content relative p-8 border-2 border-primary bg-white w-full max-w-md m-auto h-custom"
+        className="modal-content relative p-8 bg-white w-full max-w-md m-auto h-custom"
         style={{
 
         }}
       >
         <div className="flex flex-row items-center">
-          <div className="text-3xl font-bold text-black">{title}</div>
+          <div className="text-2xl font-bold text-black">{title}</div>
         </div>
         {children}
       </div>
