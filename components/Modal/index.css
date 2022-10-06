@@ -29,7 +29,8 @@
 .modal-content{
     min-width: 480px;
     max-width: 700px;
-    min-height: 370px;
+    min-height: 270px;
+    height: max-content;
     width: auto;
     border-radius: 16px;
     animation: modal-appear 0.2s ease-out;
