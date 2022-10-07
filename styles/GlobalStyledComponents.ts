@@ -22,6 +22,7 @@ export const JustifyCenterRow = styled(Row)`
 
 export const SpaceBetweenRow = styled(Row)`
   justify-content: space-between;
+  align-items: center
 `
 
 export const Column = styled.div<{gap?: number}>`
