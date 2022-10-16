@@ -32,9 +32,9 @@
     right: -400px;
     padding: 24px;
     background: #fff;
-    border: 1px solid #04C35C;
+    border: 1px solid rgba(25, 24, 41, .2);
     color: #181833;
-    box-shadow: -1px 5px 16px 7px rgba(24, 24, 51, .14);
+    box-shadow: -1px 5px 10px 7px rgba(24, 24, 51, .14);
 }
 
 .notification.shown{

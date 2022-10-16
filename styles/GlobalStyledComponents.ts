@@ -10,6 +10,13 @@ export const Row = styled.div<{gap?: number}>`
 
 export const StartRow = styled(Row)`
   justify-content: flex-start;
+  flex-wrap: wrap;
+`
+
+export const RowCentered = styled(Row)`
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 `
 
 export const AlignCenterRow = styled(Row)`
@@ -22,7 +29,6 @@ export const JustifyCenterRow = styled(Row)`
 
 export const SpaceBetweenRow = styled(Row)`
   justify-content: space-between;
-  align-items: center
 `
 
 export const Column = styled.div<{gap?: number}>`

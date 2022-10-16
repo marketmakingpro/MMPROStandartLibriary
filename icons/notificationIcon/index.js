@@ -2,7 +2,7 @@ import React from 'react';
 
 export default () => {
   return (
-    <svg class="bell" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="bell" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="1" width="28" height="28" rx="14" stroke="#181833" strokeWidth="2"/>
       <rect x="13" y="21" width="4" height="4" rx="2" fill="#181833"/>
       <path

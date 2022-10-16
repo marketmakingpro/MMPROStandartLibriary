@@ -102,14 +102,15 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
   // @ts-ignore
   const {active, activate, networkError, account, connector} = useWeb3React();
   const {setLocale, locale} = useLocale(forcedLocale);
-  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false);
-  const [notificationTitle, setNotificationTitle] = useState('')
-  const [notificationSubtitle, setNotificationSubtitle] = useState('')
+  const [shouldDisplayNotification, setShouldDisplayNotification] = useState<boolean>(false);
+  const [notificationTitle, setNotificationTitle] = useState<string>('')
+  const [notificationSubtitle, setNotificationSubtitle] = useState<string>('')
   const [notificationIcon, setNotificationIcon] = useState<ReactNode>(null)
-  const [bubbleValue, setBubbleValue] = useState('');
-  const [isUserVerified, setIsUserVerified] = useState(false)
-  const [isUserSubmitted, setIsUserSubmitted] = useState(false)
-  const [isServerNotificationActive, setIsServerNotificationActive] = useState(false)
+  const [bubbleValue, setBubbleValue] = useState<string>('');
+  const [isUserVerified, setIsUserVerified] = useState<boolean>(false);
+  const [isUserSubmitted, setIsUserSubmitted] = useState<boolean>(false);
+  const [userEmail, setUserEmail] = useState<string>('')
+  const [isServerNotificationActive, setIsServerNotificationActive] = useState<boolean>(false)
   const [notifications, setNotifications] = useState<INotification[]>(mockServerNotifications)
 
   useConnectionCheck();
@@ -138,6 +139,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
         if (json && json.data && json.data.isVerified) {
           setIsUserVerified(json.data.isVerified)
           setIsUserSubmitted(json.data.isSubmitted)
+          setUserEmail(json.data.email)
         } else {
           setIsUserVerified(false)
           setIsUserSubmitted(json.data.isSubmitted)
