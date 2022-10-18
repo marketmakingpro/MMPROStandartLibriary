@@ -13,6 +13,10 @@ export const StartRow = styled(Row)`
   flex-wrap: wrap;
 `
 
+export const EndRow = styled(Row)`
+  justify-content: flex-end;
+`
+
 export const RowCentered = styled(Row)`
   align-items: center;
   justify-content: center;
@@ -47,6 +51,11 @@ export const JustifyStartColumn = styled(Column)`
 
 export const JustifyCenterColumn = styled(Column)`
   justify-content: center;
+  align-items: center;
+`
+
+export const SpaceBetweenCenterColumn = styled(Column)`
+  justify-content: space-between;
   align-items: center;
 `
 
