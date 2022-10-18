@@ -15,8 +15,24 @@ import "../styles.scss";
 import {ConfigProvider} from "antd";
 import WalletConnectorBubbleContext from "../WalletConnectorBubbleContext";
 import styled from "styled-components";
-import {HeaderButton} from "../components/WalletConnector";
+import {HeaderButton} from "../types/HeaderButton";
 import * as Sentry from "@sentry/react";
+import {NavItems} from "../types/NavItems";
+import {IPage} from "../types/Page";
+import {INotification} from '../types/Notification';
+
+type StandardAppContainerProps = {
+  headerButtons?: React.ReactElement[],
+  logoHref?: string,
+  connectorButtons?: HeaderButton[],
+  hideWalletConnector?: boolean,
+  children: any,
+  locales: string[],
+  isDarkBG?: boolean,
+  version: string,
+  pages?: IPage[],
+  headerNavigation?: NavItems[]
+}
 
 const defaultProps = {
   locales: ["en"]
@@ -30,8 +46,18 @@ const TitleWrapper = styled.div`
   margin-bottom: 10px;
 `
 
-const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], logoHref?: string, connectorButtons: HeaderButton[], hideWalletConnector?: boolean, children: any, locales: string[], isDarkBG?: boolean, version: string, pages?: { title: string, url: string }[] }) => {
-  const {locales, isDarkBG, version, pages, logoHref, hideWalletConnector, connectorButtons, headerButtons} = props;
+const StandardAppContainer = (props: StandardAppContainerProps) => {
+  const {
+    locales,
+    isDarkBG,
+    version,
+    pages,
+    logoHref,
+    hideWalletConnector,
+    connectorButtons,
+    headerButtons,
+    headerNavigation
+  } = props;
 
   let forcedLocale;
   if (locales.length === 1) {
@@ -40,13 +66,16 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   // @ts-ignore
   const {active, activate, networkError, account, connector} = useWeb3React();
   const {setLocale, locale} = useLocale(forcedLocale);
-  const [shouldDisplayNotification, setShouldDisplayNotification] = useState(false);
-  const [notificationTitle, setNotificationTitle] = useState('')
-  const [notificationSubtitle, setNotificationSubtitle] = useState('')
+  const [shouldDisplayNotification, setShouldDisplayNotification] = useState<boolean>(false);
+  const [notificationTitle, setNotificationTitle] = useState<string>('')
+  const [notificationSubtitle, setNotificationSubtitle] = useState<string>('')
   const [notificationIcon, setNotificationIcon] = useState<ReactNode>(null)
-  const [bubbleValue, setBubbleValue] = useState('');
-  const [isUserVerified, setIsUserVerified] = useState(false)
-  const [isUserSubmitted, setIsUserSubmitted] = useState(false)
+  const [bubbleValue, setBubbleValue] = useState<string>('');
+  const [isUserVerified, setIsUserVerified] = useState<boolean>(false);
+  const [isUserSubmitted, setIsUserSubmitted] = useState<boolean>(false);
+  const [userEmail, setUserEmail] = useState<string>('')
+  const [isServerNotificationActive, setIsServerNotificationActive] = useState<boolean>(false)
+  const [notifications, setNotifications] = useState<INotification[]>()
 
   useConnectionCheck();
 
@@ -61,7 +90,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   };
 
   async function getUserVerification() {
-    const getUserDataUrl = `https://mmpro-kyc-backend.herokuapp.com/api/validation?wallet=${account}`;
+    const getUserDataUrl = `http://134.209.181.150:7002/api/validation?wallet=${account}`;
 
     const requestOptions = {
       method: "GET",
@@ -71,9 +100,10 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
     fetch(getUserDataUrl, requestOptions)
       .then(res => res.json())
       .then(json => {
-        if(json && json.data && json.data.isVerified){
+        if (json && json.data && json.data.isVerified) {
           setIsUserVerified(json.data.isVerified)
           setIsUserSubmitted(json.data.isSubmitted)
+          setUserEmail(json.data.email)
         } else {
           setIsUserVerified(false)
           setIsUserSubmitted(json.data.isSubmitted)
@@ -94,12 +124,12 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
   useEffect(() => {
     if (account) {
       getUserVerification()
-      Sentry.setUser({ wallet: account });
+      Sentry.setUser({wallet: account});
       Sentry.setTag("wallet", account);
       // @ts-ignore
-      if(connector.walletConnectProvider){
+      if (connector.walletConnectProvider) {
         Sentry.setTag("connection method", "Wallet Connect");
-      }else{
+      } else {
         Sentry.setTag("connection method", "Metamask");
       }
     }
@@ -132,6 +162,7 @@ const StandardAppContainer = (props: { headerButtons?: React.ReactElement[], log
                   </div>
                 </div>
                 <Header
+                  headerNavigation={headerNavigation}
                   connectorButtons={connectorButtons}
                   logoHref={logoHref}
                   hideWalletConnector={hideWalletConnector}
