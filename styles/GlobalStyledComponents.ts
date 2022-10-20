@@ -17,6 +17,10 @@ export const EndRow = styled(Row)`
   justify-content: flex-end;
 `
 
+export const AlignStartRow = styled(Row)`
+  align-items: flex-start;
+`
+
 export const RowCentered = styled(Row)`
   align-items: center;
   justify-content: center;
