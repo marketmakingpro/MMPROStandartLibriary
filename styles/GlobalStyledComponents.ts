@@ -13,6 +13,10 @@ export const StartRow = styled(Row)`
   flex-wrap: wrap;
 `
 
+export const StartRowNowWrap = styled(StartRow)`
+  flex-wrap: nowrap;
+`
+
 export const EndRow = styled(Row)`
   justify-content: flex-end;
 `
