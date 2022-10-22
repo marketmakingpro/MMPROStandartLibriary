@@ -46,6 +46,13 @@ const NavContainer = styled.div`
   justify-content: center;
   padding: 0 80px;
   gap: 36px;
+  
+  @media screen and (max-width: 1200px) {
+    align-items: flex-start;
+   
+    padding: 0;
+    gap: 10px;
+  }
 `
 
 const LogoAndTabs = styled.div`
@@ -54,6 +61,10 @@ const LogoAndTabs = styled.div`
   justify-content: flex-start;
   gap: 12px;
   min-width: 200px;
+  
+  @media screen and (max-width: 1200px) {
+    min-width: 0;
+  }
 `
 
 const ControlStrip = styled.div`
@@ -130,7 +141,7 @@ const Header = (props: HeaderProps) => {
         </LogoAndTabs>
 
         <NavContainer>
-          {headerNavigation && isUserLoggedIn &&
+          {headerNavigation &&
             headerNavigation.map((nav, index) => <div key={index}>{nav}</div>)
           }
         </NavContainer>
