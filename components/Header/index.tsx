@@ -139,7 +139,7 @@ const Header = (props: HeaderProps) => {
           {headerButtons &&
             headerButtons.map((button, index) => <div key={index}>{button}</div>)
           }
-          {!hideWalletConnector && connectorButtons && isUserLoggedIn &&
+          {!hideWalletConnector && connectorButtons &&
             <WalletConnector buttons={connectorButtons}/>
           }
           {locales.length > 1 &&
