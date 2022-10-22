@@ -136,7 +136,7 @@ const Header = (props: HeaderProps) => {
         </NavContainer>
 
         <ControlStrip>
-          {headerButtons && isUserLoggedIn &&
+          {headerButtons &&
             headerButtons.map((button, index) => <div key={index}>{button}</div>)
           }
           {!hideWalletConnector && connectorButtons && isUserLoggedIn &&
