@@ -1,10 +1,14 @@
 import styled, {css} from 'styled-components';
 
-export const Row = styled.div<{gap?: number}>`
+export const Row = styled.div<{gap?: number, wrap?: boolean}>`
   display: flex;
 
   ${({ gap }) => gap && css`
     gap: ${gap}px;
+  `};
+
+  ${({ wrap }) => wrap && css`
+    flex-wrap: wrap;
   `};
 `
 
@@ -44,12 +48,16 @@ export const SpaceBetweenRow = styled(Row)`
   align-items: center;
 `
 
-export const Column = styled.div<{gap?: number}>`
+export const Column = styled.div<{gap?: number, wrap?: boolean}>`
   display: flex;
   flex-direction: column;
 
   ${({ gap }) => gap && css`
     gap: ${gap}px;
+  `};
+
+  ${({ wrap }) => wrap && css`
+    flex-wrap: wrap;
   `};
 `
 
