@@ -29,7 +29,7 @@ const DecoarationBlur = styled.div`
   right: 0px;
   bottom: 0px;
   z-index: 1;
-  background: linear-gradient(360deg, rgba(255, 255, 255, 0.39) 0%, rgba(255, 255, 255, 0) 100%);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(81px);
 `
 
