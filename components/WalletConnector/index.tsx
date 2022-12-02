@@ -58,7 +58,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
   const onClickConnectorButton = () => {
     setIsConnectorOpen(false)
   }
-
+  console.log(active)
   return (
     <div className={'disconnect-button-container'} ref={ref}>
       <div className={`notification-bubble ${(!active || bubbleValue.length === 0) ? 'hiding' : ''}`}>
@@ -80,8 +80,12 @@ const WalletConnector = (props: WalletConnectorPropType) => {
             </>
           }
           {!active &&
-            <span
-              className={`connect-title ${isConnectorOpen ? 'open' : ''}`}>{localized(texts.connectWallet, locale)}</span>
+            <>
+              <span
+                className={`connect-title ${isConnectorOpen ? 'open' : ''}`}>{localized(texts.connectWallet, locale)}
+              </span>
+              <img src="/images/wallet/metamask.svg" alt="metamask" className={'mobile-wallet-connector'}/>
+            </>
           }
           <div className={`swoosh ${isConnectorOpen ? 'open' : ''}`}>
             <Swoosh/>

@@ -9,10 +9,19 @@
   height: 46px;
 }
 
+.mobile-wallet-connector {
+  display: none;
+
+  @media screen and (max-width: 1200px) {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+}
+
 .wallet-button {
   outline: none !important;
   background: white;
-  /*width: 100%;*/
   border: 1px solid #E8E8EB !important;
   transition: all 0.1s 0.2s ease-out !important;
   display: flex;
@@ -62,6 +71,11 @@
   background: #33CC66;
   padding-right: 0px !important;
   padding-left: 0px !important;
+
+  @media screen and (max-width: 1200px) {
+    background: none;
+    padding: 0;
+  }
 }
 
 .wallet-button.not-connected.open{
