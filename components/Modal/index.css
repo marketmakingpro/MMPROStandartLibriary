@@ -2,7 +2,7 @@
     from {
         opacity: 0;
     }
-    to {
+    to{
         opacity: 1;
     }
 }
@@ -11,12 +11,15 @@
     from {
         transform: scale(0.8);
     }
-    to {
+    to{
         transform: scale(1);
     }
 }
 
-.modal-container {
+.modal-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(0, 0, 0, .5);
     width: 100%;
     height: 100%;
@@ -26,12 +29,10 @@
     animation: modal-container-appear 0.2s ease-out;
 }
 
-.modal-content {
-    min-width: 480px;
+.modal-content{
+    min-width: 100px;
     max-width: 700px;
-    min-height: 270px;
-    height: max-content;
     width: auto;
-    border-radius: 16px;
+    border-radius: 10px;
     animation: modal-appear 0.2s ease-out;
 }

@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import './index.css'
 
-const Modal = ({children, onClose, title}) => {
+const Modal = ({children, onClose, title = ''}) => {
   const ref = useRef(null);
 
   const closeModal = () => {
@@ -20,14 +20,9 @@ const Modal = ({children, onClose, title}) => {
     >
       <div
         ref={ref}
-        className="modal-content relative p-8 bg-white w-full max-w-md m-auto h-custom"
-        style={{
-
-        }}
+        className="modal-content"
+        style={{}}
       >
-        <div className="flex flex-row items-center">
-          <div className="text-2xl font-bold text-black">{title}</div>
-        </div>
         {children}
       </div>
     </div>
