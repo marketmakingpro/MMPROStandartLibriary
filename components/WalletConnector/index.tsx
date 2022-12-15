@@ -60,8 +60,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
       >
         {/* @ts-ignore */}
         <button
-          className={`wallet-button ${(active) ? 'connected' : 'not-connected'} 
-                    ${isConnectorOpen ? 'open' : ''}`} onClick={mainButtonClick}
+          className={`wallet-button connected ${isConnectorOpen ? 'open' : ''}`} onClick={mainButtonClick}
         >
           {active &&
             <>
