@@ -34,6 +34,12 @@ const Button = styled.button<ButtonV2PropType>`
             background: ${isValid ? "#04C35C" : "rgba(0, 0, 0, 0.2)"};
             transition: background 0.3s ease;
         `};
+
+  ${({ isValid }) =>
+          !isValid &&
+          css`
+            pointer-events: none;
+        `};
   
   position: relative;
   display: flex;
