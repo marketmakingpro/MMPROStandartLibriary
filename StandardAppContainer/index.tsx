@@ -126,7 +126,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
   };
 
   async function getUserVerification() {
-    const getUserDataUrl = `http://134.209.181.150:7002/api/validation?wallet=${account}`;
+    const getUserDataUrl = `https://back2.kyc.marketmaking.pro/api/validation?wallet=${account}`;
 
     const requestOptions = {
       method: "GET",
