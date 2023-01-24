@@ -22,6 +22,7 @@ import {IPage} from "../types/Page";
 import {INotification} from '../types/Notification';
 
 type StandardAppContainerProps = {
+
   headerButtons?: React.ReactElement[],
   logoHref?: string,
   connectorButtons?: HeaderButton[],
