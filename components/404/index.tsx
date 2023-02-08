@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 import TrustButton from "../TrustButton";
 import Text from "../Text";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 type NoPageErrorProps = {
   isServerError?: boolean
@@ -14,7 +14,7 @@ const DefaultProps = {
 
 const NoPageError = (props: NoPageErrorProps) => {
   const {isServerError} = props
-  const history = useHistory()
+  const history = useNavigate()
   return (
     <div className='container-error'>
       <div className='wrapper'>
@@ -44,7 +44,7 @@ const NoPageError = (props: NoPageErrorProps) => {
         <div className="text">
           <Text fontWeight={400} fontSize={24}>{!isServerError ? 'Page not found :(' : 'Something bad happened'}</Text>
           <div className='mb-4'/>
-          {!isServerError && <TrustButton isValid style={"green"} onClick={() => history.goBack()}>Go Back!</TrustButton>}
+          {!isServerError && <TrustButton isValid style={"green"} onClick={() => history(-1)}>Go Back!</TrustButton>}
         </div>
       </div>
     </div>
