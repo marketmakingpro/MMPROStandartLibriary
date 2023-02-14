@@ -53,7 +53,7 @@ const LogoAndTabs = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
-  min-width: 200px;
+  max-width: 150px;
 `
 
 const ControlStrip = styled.div`
