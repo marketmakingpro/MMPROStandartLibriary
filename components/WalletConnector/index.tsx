@@ -129,7 +129,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
                 className={`connection-button`}
                 onClick={() => {
                   activate(walletconnect).then(() => {
-                    window.location.reload()
+                    window.location.reload();
                   });
                 }}
               >

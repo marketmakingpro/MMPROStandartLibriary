@@ -1,25 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
-import React, {ReactNode, useEffect, useState} from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import {useConnectionCheck} from "../hooks/useConnectionCheck";
-import {injected} from "../wallet";
-import {useWeb3React} from "@web3-react/core";
-import {useLocale} from "../hooks/useLocale";
+import { useConnectionCheck } from "../hooks/useConnectionCheck";
+import { injected } from "../wallet";
+import { useWeb3React } from "@web3-react/core";
+import { useLocale } from "../hooks/useLocale";
 import LocaleContext from "../LocaleContext";
 import NotificationContext from "../utils/NotificationContext";
 import UserDataContext from "../UserDataContext";
 import "./index.css";
 import "../styles.scss";
-import {ConfigProvider} from "antd";
+import { ConfigProvider } from "antd";
 import WalletConnectorBubbleContext from "../WalletConnectorBubbleContext";
 import styled from "styled-components";
-import {HeaderButton} from "../types/HeaderButton";
+import { HeaderButton } from "../types/HeaderButton";
 import * as Sentry from "@sentry/react";
-import {NavItems} from "../types/NavItems";
-import {IPage} from "../types/Page";
-import {INotification} from '../types/Notification';
+import { NavItems } from "../types/NavItems";
+import { IPage } from "../types/Page";
+import { INotification } from "../types/Notification";
 
 type StandardAppContainerProps = {
 
@@ -45,7 +45,7 @@ const TitleWrapper = styled.div`
   justify-content: flex-start;
   gap: 14px;
   margin-bottom: 10px;
-`
+`;
 
 const StandardAppContainer = (props: StandardAppContainerProps) => {
   const {
@@ -65,54 +65,25 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
     forcedLocale = locales[0];
   }
   // @ts-ignore
-  const {active, activate, networkError, account, connector} = useWeb3React();
-  const {setLocale, locale} = useLocale(forcedLocale);
+  const { active, activate, networkError, account, connector } = useWeb3React();
+  const { setLocale, locale } = useLocale(forcedLocale);
   const [shouldDisplayNotification, setShouldDisplayNotification] = useState<boolean>(false);
-  const [notificationTitle, setNotificationTitle] = useState<string>('')
-  const [notificationSubtitle, setNotificationSubtitle] = useState<string>('')
-  const [notificationIcon, setNotificationIcon] = useState<ReactNode>(null)
-  const [bubbleValue, setBubbleValue] = useState<string>('');
-  const [isUserVerified, setIsUserVerified] = useState<boolean>(false);
-  const [isUserSubmitted, setIsUserSubmitted] = useState<boolean>(false);
-  const [userEmail, setUserEmail] = useState<string>('')
-  const [isServerNotificationActive, setIsServerNotificationActive] = useState<boolean>(false)
-  const [notifications, setNotifications] = useState<INotification[]>()
+  const [notificationTitle, setNotificationTitle] = useState<string>("");
+  const [notificationSubtitle, setNotificationSubtitle] = useState<string>("");
+  const [notificationIcon, setNotificationIcon] = useState<ReactNode>(null);
+  const [bubbleValue, setBubbleValue] = useState<string>("");
 
   useConnectionCheck();
 
   const displayNotification = (title: string, subtitle: string, icon: ReactNode) => {
-    setNotificationIcon(icon)
-    setNotificationTitle(title)
-    setNotificationSubtitle(subtitle)
+    setNotificationIcon(icon);
+    setNotificationTitle(title);
+    setNotificationSubtitle(subtitle);
     setShouldDisplayNotification(true);
     setTimeout(() => {
       setShouldDisplayNotification(false);
     }, 2500);
   };
-
-  async function getUserVerification() {
-    const getUserDataUrl = `http://134.209.181.150:7002/api/validation?wallet=${account}`;
-
-    const requestOptions = {
-      method: "GET",
-      headers: {"Content-Type": "application/json"},
-    };
-
-    fetch(getUserDataUrl, requestOptions)
-      .then(res => res.json())
-      .then(json => {
-        if (json && json.data && json.data.isVerified) {
-          setIsUserVerified(json.data.isVerified)
-          setIsUserSubmitted(json.data.isSubmitted)
-          setUserEmail(json.data.email)
-        } else {
-          setIsUserVerified(false)
-          setIsUserSubmitted(json.data.isSubmitted)
-        }
-      })
-      .catch(e => {
-      });
-  }
 
   useEffect(() => {
     injected.isAuthorized().then((isAuthorized) => {
@@ -124,8 +95,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
 
   useEffect(() => {
     if (account) {
-      getUserVerification()
-      Sentry.setUser({wallet: account});
+      Sentry.setUser({ wallet: account });
       Sentry.setTag("wallet", account);
       // @ts-ignore
       if (connector.walletConnectProvider) {
@@ -134,51 +104,49 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
         Sentry.setTag("connection method", "Metamask");
       }
     }
-  }, [account, isUserVerified])
+  }, [account]);
 
   return (
     // @ts-ignore
     <ConfigProvider getPopupContainer={trigger => trigger.parentElement}>
-      <LocaleContext.Provider value={{setLocale, locale}}>
-        <UserDataContext.Provider value={{isUserVerified, isUserSubmitted}}>
-          <WalletConnectorBubbleContext.Provider value={{
-            setBubbleValue: setBubbleValue,
-            bubbleValue: bubbleValue,
-          }}>
-            <NotificationContext.Provider
-              value={{
-                displayNotification
-              }}
-            >
-              <div className={`main-content-container main-background`}>
-                <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
-                  <TitleWrapper>
-                    {notificationIcon}
-                    <div className={"notification-title"}>
-                      {notificationTitle}
-                    </div>
-                  </TitleWrapper>
-                  <div className={"notification-body"}>
-                    {notificationSubtitle}
+      <LocaleContext.Provider value={{ setLocale, locale }}>
+        <WalletConnectorBubbleContext.Provider value={{
+          setBubbleValue: setBubbleValue,
+          bubbleValue: bubbleValue
+        }}>
+          <NotificationContext.Provider
+            value={{
+              displayNotification
+            }}
+          >
+            <div className={`main-content-container main-background`}>
+              <div className={`notification ${shouldDisplayNotification ? "shown" : ""}`}>
+                <TitleWrapper>
+                  {notificationIcon}
+                  <div className={"notification-title"}>
+                    {notificationTitle}
                   </div>
-                </div>
-                <Header
-                  headerNavigation={headerNavigation}
-                  connectorButtons={connectorButtons}
-                  logoHref={logoHref}
-                  hideWalletConnector={hideWalletConnector}
-                  pages={pages}
-                  locales={locales}
-                  headerButtons={headerButtons}
-                />
-                <div className={"children-container"}>
-                  {props.children}
-                  <Footer version={version}/>
+                </TitleWrapper>
+                <div className={"notification-body"}>
+                  {notificationSubtitle}
                 </div>
               </div>
-            </NotificationContext.Provider>
-          </WalletConnectorBubbleContext.Provider>
-        </UserDataContext.Provider>
+              <Header
+                headerNavigation={headerNavigation}
+                connectorButtons={connectorButtons}
+                logoHref={logoHref}
+                hideWalletConnector={hideWalletConnector}
+                pages={pages}
+                locales={locales}
+                headerButtons={headerButtons}
+              />
+              <div className={"children-container"}>
+                {props.children}
+                <Footer version={version} />
+              </div>
+            </div>
+          </NotificationContext.Provider>
+        </WalletConnectorBubbleContext.Provider>
       </LocaleContext.Provider>
     </ConfigProvider>
   );

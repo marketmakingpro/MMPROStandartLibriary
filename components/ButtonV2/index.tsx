@@ -7,7 +7,7 @@ type ButtonV2PropType = {
   onClick: () => void,
   children: React.ReactNode | string,
   outlined?: boolean,
-  className?: string
+  className?: string,
 }
 
 const ButtonV2DefaultProps = {
