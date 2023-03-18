@@ -12,7 +12,7 @@
 .wallet-button {
   outline: none !important;
   background: white;
-  /*width: 100%;*/
+  width: 100%;
   border: 1px solid #E8E8EB !important;
   transition: all 0.1s 0.2s ease-out !important;
   display: flex;
@@ -113,6 +113,7 @@
   transform-origin: top right;
   overflow: hidden;
   transform: scaleY(0);
+  min-width: calc(100% + 50px);
 }
 
 .connect-wallet-flex.not-connected {

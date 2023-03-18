@@ -63,13 +63,43 @@ const WalletConnector = (props: WalletConnectorPropType) => {
           className={`wallet-button connected ${isConnectorOpen ? 'open' : ''}`} onClick={mainButtonClick}
         >
           {/*<MetamaskJazzicon/>*/}
-          <span
-            className={`connect-title ${isConnectorOpen ? 'open' : ''}`}
-            style={{height: 30}}
-          >
-            {localized(texts.profile, locale)}
-          </span>
-          <div className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''} connected`}>
+          {/*<span*/}
+          {/*  className={`connect-title ${isConnectorOpen ? 'open' : ''}`}*/}
+          {/*  style={{height: 30}}*/}
+          {/*>*/}
+          {/*  {localized(texts.profile, locale)}*/}
+          {/*</span>*/}
+          {/*<div className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''} connected`}>*/}
+          {/*  <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>*/}
+          {/*    {*/}
+          {/*      buttons.map((item, index) => {*/}
+          {/*        return (*/}
+          {/*          <div key={index} onClick={onClickConnectorButton} style={{minWidth: 210}}>*/}
+          {/*            {item}*/}
+          {/*          </div>*/}
+          {/*        )*/}
+          {/*      })*/}
+          {/*    }*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          {active &&
+            <>
+              <MetamaskJazzicon/>
+              <span className={`connect-title ${isConnectorOpen ? 'open' : ''}`}
+                    style={{height: 30}}>{localized(texts.profile, locale)}</span>
+            </>
+          }
+          {!active &&
+            <span
+              className={`connect-title ${isConnectorOpen ? 'open' : ''}`}>{localized(texts.connectWallet, locale)}</span>
+          }
+          <div className={`swoosh ${isConnectorOpen ? 'open' : ''}`}>
+            <Swoosh/>
+          </div>
+        </button>
+        {active &&
+          <div
+            className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''} connected`}>
             <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>
               {
                 buttons.map((item, index) => {
@@ -82,75 +112,45 @@ const WalletConnector = (props: WalletConnectorPropType) => {
               }
             </div>
           </div>
-          {/*{active &&*/}
-          {/*  <>*/}
-          {/*    <MetamaskJazzicon/>*/}
-          {/*    <span className={`connect-title ${isConnectorOpen ? 'open' : ''}`}*/}
-          {/*          style={{height: 30}}>{localized(texts.profile, locale)}</span>*/}
-          {/*  </>*/}
-          {/*}*/}
-          {/*{!active &&*/}
-          {/*  <span*/}
-          {/*    className={`connect-title ${isConnectorOpen ? 'open' : ''}`}>{localized(texts.connectWallet, locale)}</span>*/}
-          {/*}*/}
-          <div className={`swoosh ${isConnectorOpen ? 'open' : ''}`}>
-            <Swoosh/>
+        }
+        {!active &&
+          <div className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''}`}>
+            <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>
+              <div
+                className={`connection-button`}
+                onClick={() => {
+                  activate(injected).then();
+                }}
+              >
+                <img
+                  src="/images/wallet/metamask.svg"
+                  alt="metamask"
+                  width="30"
+                  height="30"
+                  style={{marginRight: 10}}
+                />
+                <span>MetaMask</span>
+              </div>
+              <div
+                className={`connection-button`}
+                onClick={() => {
+                  activate(walletconnect).then(() => {
+                    window.location.reload()
+                  });
+                }}
+              >
+                <img
+                  src="/images/wallet/trustwallet.svg"
+                  alt="metamask"
+                  width="30"
+                  height="30"
+                  style={{marginRight: 10}}
+                />
+                <span>Wallet connect</span>
+              </div>
+            </div>
           </div>
-        </button>
-        {/*{active &&*/}
-        {/*  <div*/}
-        {/*    className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''} connected`}>*/}
-        {/*    <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>*/}
-        {/*      {*/}
-        {/*        buttons.map((item, index) => {*/}
-        {/*          return (*/}
-        {/*            <div key={index} onClick={onClickConnectorButton} style={{minWidth: 210}}>*/}
-        {/*              {item}*/}
-        {/*            </div>*/}
-        {/*          )*/}
-        {/*        })*/}
-        {/*      }*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*}*/}
-        {/*{!active &&*/}
-        {/*  <div className={`connect-wallet-flex ${isConnectorOpen ? 'open' : ''}`}>*/}
-        {/*    <div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>*/}
-        {/*      <div*/}
-        {/*        className={`connection-button`}*/}
-        {/*        onClick={() => {*/}
-        {/*          activate(injected).then();*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        <img*/}
-        {/*          src="/images/wallet/metamask.svg"*/}
-        {/*          alt="metamask"*/}
-        {/*          width="30"*/}
-        {/*          height="30"*/}
-        {/*          style={{marginRight: 10}}*/}
-        {/*        />*/}
-        {/*        <span>MetaMask</span>*/}
-        {/*      </div>*/}
-        {/*      <div*/}
-        {/*        className={`connection-button`}*/}
-        {/*        onClick={() => {*/}
-        {/*          activate(walletconnect).then(() => {*/}
-        {/*            window.location.reload()*/}
-        {/*          });*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        <img*/}
-        {/*          src="/images/wallet/trustwallet.svg"*/}
-        {/*          alt="metamask"*/}
-        {/*          width="30"*/}
-        {/*          height="30"*/}
-        {/*          style={{marginRight: 10}}*/}
-        {/*        />*/}
-        {/*        <span>Wallet connect</span>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*}*/}
+        }
       </div>
     </div>
   )
