@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const testEmailRegex = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
 const testAdressRegex = /^0x[a-fA-F0-9]{40}$/;
+const onlyEnglishAndNumeric = /^[a-z][a-z0-9]*$/i
 
 export type ControlledValidationState<Type> = {
   data: Type;
@@ -13,14 +14,15 @@ export const validationFuncs = {
   isEmail: (newValue: string): boolean => testEmailRegex.test(newValue),
   validPassword: (newValue: string): boolean => newValue.length>8,
   isAddress: (newValue: string): boolean => testAdressRegex.test(newValue),
-  controlled: (newValue: ControlledValidationState<any>): boolean => newValue.isValid
+  controlled: (newValue: ControlledValidationState<any>): boolean => newValue.isValid,
+  hasEnglishValue: (newValue: string): boolean => newValue.length>0 && onlyEnglishAndNumeric.test(newValue)
 }
 
 export const validationDateFuncs = {
   dateIsNotGreaterThanToday: (newValue: string): boolean => {
     const newDateValue = newValue.split('.')
     const formatDate = new Date(parseInt(
-      newDateValue[2]),
+        newDateValue[2]),
       parseInt(newDateValue[1])-1,
       parseInt(newDateValue[0])
     );
@@ -31,7 +33,7 @@ export const validationDateFuncs = {
 export const validationFuncsFactory = {
   inArray: <T>(array: T[]): ((newValue: T)=> boolean) => {
     return (newValue: T) => array.includes(newValue)
-},
+  },
 }
 
 export default function useValidatedState<Type>(defaultValue: Type, validationFunction: (newValue: Type) => boolean, defaultValidation?: boolean):
