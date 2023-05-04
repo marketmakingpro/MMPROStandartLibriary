@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
-import React, {ReactNode, useEffect, useState} from "react";
+import React, {ReactNode, useContext, useEffect, useState} from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import {useConnectionCheck} from "../hooks/useConnectionCheck";
@@ -23,6 +23,9 @@ import ServerNotifications from "../components/ServerNotifications";
 import {IPage} from "../types/Page";
 import {INotification} from '../types/Notification';
 import ErrorBoundary from "../components/ErrorBoundary";
+import UserStatusContext from "../../context/UserStatusContext";
+import texts from './localization'
+import {localized} from "../hooks/localized";
 
 const mockServerNotifications: INotification[] = [
   {
@@ -125,29 +128,29 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
     }, 2500);
   };
 
-  async function getUserVerification() {
-    const getUserDataUrl = `https://back2.kyc.marketmaking.pro/api/validation?wallet=${account}`;
-
-    const requestOptions = {
-      method: "GET",
-      headers: {"Content-Type": "application/json"},
-    };
-
-    fetch(getUserDataUrl, requestOptions)
-      .then(res => res.json())
-      .then(json => {
-        if (json && json.data && json.data.isVerified) {
-          setIsUserVerified(json.data.isVerified)
-          setIsUserSubmitted(json.data.isSubmitted)
-          setUserEmail(json.data.email)
-        } else {
-          setIsUserVerified(false)
-          setIsUserSubmitted(json.data.isSubmitted)
-        }
-      })
-      .catch(e => {
-      });
-  }
+  // async function getUserVerification() {
+  //   const getUserDataUrl = `https://back2.kyc.marketmaking.pro/api/validation?wallet=${account}`;
+  //
+  //   const requestOptions = {
+  //     method: "GET",
+  //     headers: {"Content-Type": "application/json"},
+  //   };
+  //
+  //   fetch(getUserDataUrl, requestOptions)
+  //     .then(res => res.json())
+  //     .then(json => {
+  //       if (json && json.data && json.data.isVerified) {
+  //         setIsUserVerified(json.data.isVerified)
+  //         setIsUserSubmitted(json.data.isSubmitted)
+  //         setUserEmail(json.data.email)
+  //       } else {
+  //         setIsUserVerified(false)
+  //         setIsUserSubmitted(json.data.isSubmitted)
+  //       }
+  //     })
+  //     .catch(e => {
+  //     });
+  // }
 
   useEffect(() => {
     injected.isAuthorized().then((isAuthorized) => {
@@ -159,7 +162,7 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
 
   useEffect(() => {
     if (account) {
-      getUserVerification()
+      // getUserVerification()
       Sentry.setUser({wallet: account});
       Sentry.setTag("wallet", account);
       // @ts-ignore

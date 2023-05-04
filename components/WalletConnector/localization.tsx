@@ -1,6 +1,6 @@
 export default {
   profile: {
-    en: "Profile",
+    en: "Profile",ch: "輪廓",
     ja: "プロフィール"
   },
   connectWallet: {
