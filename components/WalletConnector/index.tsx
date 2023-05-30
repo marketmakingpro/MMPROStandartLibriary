@@ -58,7 +58,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
   const onClickConnectorButton = () => {
     setIsConnectorOpen(false)
   }
-  console.log(active)
+
   return (
     <div className={'disconnect-button-container'} ref={ref}>
       <div className={`notification-bubble ${(!active || bubbleValue.length === 0) ? 'hiding' : ''}`}>
@@ -129,7 +129,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
                 className={`connection-button`}
                 onClick={() => {
                   activate(walletconnect).then(() => {
-                    window.location.reload()
+                    window.location.reload();
                   });
                 }}
               >
