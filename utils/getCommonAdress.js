@@ -5,6 +5,10 @@ export const getBUSDAddress = () => {
     // return "0xe10fecd363459964cecff2e91feb3cdee3aa7e21";
 };
 
+export const getUSDTAddress = () => {
+    // main-net
+    return "0x55d398326f99059fF775485246999027B3197955";
+};
 export const getMMProAddress = () => {
     // main-net
     return "0x6067490d05F3cF2fdFFC0e353b1f5Fd6E5CCDF70";
