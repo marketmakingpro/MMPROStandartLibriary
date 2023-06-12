@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const testEmailRegex = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
 const testAdressRegex = /^0x[a-fA-F0-9]{40}$/;
-const onlyEnglishAndNumeric = /^[a-z][a-z0-9]*$/i
+const onlyEnglishAndNumeric = /^[a-zA-Z0-9,\s-]+$/
 
 export type ControlledValidationState<Type> = {
   data: Type;
@@ -10,12 +10,12 @@ export type ControlledValidationState<Type> = {
 }
 
 export const validationFuncs = {
-  hasValue: (newValue: string): boolean => newValue.length>0,
+  hasValue: (newValue: string): boolean => newValue?.length > 0,
   isEmail: (newValue: string): boolean => testEmailRegex.test(newValue),
-  validPassword: (newValue: string): boolean => newValue.length>8,
+  validPassword: (newValue: string): boolean => newValue?.length > 8,
   isAddress: (newValue: string): boolean => testAdressRegex.test(newValue),
   controlled: (newValue: ControlledValidationState<any>): boolean => newValue.isValid,
-  hasEnglishValue: (newValue: string): boolean => newValue.length>0 && onlyEnglishAndNumeric.test(newValue)
+  hasEnglishValue: (newValue: string): boolean => newValue?.length > 0 && onlyEnglishAndNumeric.test(newValue)
 }
 
 export const validationDateFuncs = {
