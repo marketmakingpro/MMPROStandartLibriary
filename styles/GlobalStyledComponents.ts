@@ -41,6 +41,8 @@ export const Column = styled.div<{gap?: number}>`
 `
 
 export const JustifyStartColumn = styled(Column)`
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
 `
 

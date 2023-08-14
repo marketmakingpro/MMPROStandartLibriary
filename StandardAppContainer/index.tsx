@@ -128,30 +128,6 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
     }, 2500);
   };
 
-  // async function getUserVerification() {
-  //   const getUserDataUrl = `https://back2.kyc.marketmaking.pro/api/validation?wallet=${account}`;
-  //
-  //   const requestOptions = {
-  //     method: "GET",
-  //     headers: {"Content-Type": "application/json"},
-  //   };
-  //
-  //   fetch(getUserDataUrl, requestOptions)
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       if (json && json.data && json.data.isVerified) {
-  //         setIsUserVerified(json.data.isVerified)
-  //         setIsUserSubmitted(json.data.isSubmitted)
-  //         setUserEmail(json.data.email)
-  //       } else {
-  //         setIsUserVerified(false)
-  //         setIsUserSubmitted(json.data.isSubmitted)
-  //       }
-  //     })
-  //     .catch(e => {
-  //     });
-  // }
-
   useEffect(() => {
     injected.isAuthorized().then((isAuthorized) => {
       if (isAuthorized && !active && !networkError) {
