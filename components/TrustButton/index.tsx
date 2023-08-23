@@ -28,6 +28,7 @@ const ButtonStyled = styled.button`
   position: relative;
   outline: none;
   transition: all 0.3s ease;
+  padding: 12px;
   
   &:focus,
   &:active {
