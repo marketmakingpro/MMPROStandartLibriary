@@ -46,6 +46,11 @@ const NavContainer = styled.div`
   justify-content: center;
   padding: 0 80px;
   gap: 36px;
+
+  @media screen and (max-width: 900px) {
+    padding: 0 50px;
+  }
+
 `
 
 const LogoAndTabs = styled.div`
