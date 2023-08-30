@@ -13,7 +13,6 @@
 
 .half-circle-spinner .circle {
   transition: all 0.2s;
-
   content: "";
   position: absolute;
   width: 100%;
