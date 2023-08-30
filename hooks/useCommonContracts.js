@@ -5,8 +5,6 @@ import {
   getBUSDAddress,
   getMMProAddress,
   getPancakeRouterAddress,
-  getMMProAddress,
-  getPancakeRouterAddress,
   getUSDTAddress
 } from "../utils/getCommonAdress";
 import MMPRO from "../contracts/MMPRO.json";
