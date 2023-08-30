@@ -1,13 +1,18 @@
 import Web3 from "web3";
-import { useWeb3React } from "@web3-react/core";
+import {useWeb3React} from "@web3-react/core";
 
 import {
   getBUSDAddress,
   getMMProAddress,
   getPancakeRouterAddress,
+  getMMProAddress,
+  getPancakeRouterAddress,
+  getUSDTAddress
 } from "../utils/getCommonAdress";
 import MMPRO from "../contracts/MMPRO.json";
 import BUSD from "../contracts/Busd.json";
+import USDT from "../contracts/Usdt.json";
+
 import PancakeRouter from '../contracts/PancakeRouter.json'
 import getRpcUrl from "../utils/getRpcUrl";
 
@@ -17,7 +22,7 @@ const httpProvider = new Web3.providers.HttpProvider(RPC_URL, {
 });
 
 export const useWeb3 = () => {
-  const { library } = useWeb3React();
+  const {library} = useWeb3React();
   let web3;
   if (library) {
     web3 = new Web3(library.currentProvider || httpProvider);
@@ -36,6 +41,12 @@ export const useBUSDContract = () => {
   const abi = BUSD.abi;
   return useContract(abi, getBUSDAddress());
 };
+
+export const useUSDTContract = () => {
+  const abi = USDT.abi;
+  return useContract(abi, getUSDTAddress());
+};
+
 
 export const useMMProContract = () => {
   const abi = MMPRO.abi;
