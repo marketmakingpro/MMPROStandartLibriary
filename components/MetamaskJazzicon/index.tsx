@@ -9,7 +9,6 @@ import jazzicon from 'jazzicon';
 
 // DEFAULT FUNCTIONS
 
-
 const MetamaskJazzicon = () => {
     const {account} = useWeb3React()
     const avatarRef = React.createRef<HTMLDivElement>()
