@@ -10,6 +10,7 @@ import {useCookies} from "react-cookie";
 import {HeaderButton} from "../../types/HeaderButton";
 import {IPage} from '../../types/Page'
 import {NavItems} from "../../types/NavItems";
+import TrustButton from "../TrustButton";
 
 type HeaderProps = {
   headerButtons?: React.ReactElement[],
@@ -62,10 +63,19 @@ const LogoAndTabs = styled.div`
 `
 
 const ControlStrip = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 12px
+`
+
+const ContactButtonWrapper = styled.div`
+  width: 100px;
+  
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `
 
 const Header = (props: HeaderProps) => {
@@ -141,6 +151,9 @@ const Header = (props: HeaderProps) => {
         </NavContainer>
 
         <ControlStrip>
+          <ContactButtonWrapper>
+            <TrustButton style={'green'} isValid onClick={() => window.open('https://t.me/mmpro_support1', '_blank')}>Contact Us</TrustButton>
+          </ContactButtonWrapper>
           {headerButtons && isUserLoggedIn &&
             headerButtons.map((button, index) => <div key={index}>{button}</div>)
           }
