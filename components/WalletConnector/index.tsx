@@ -13,6 +13,10 @@ import UserDataContext from "../../UserDataContext";
 import button from "../Button";
 import {HeaderButton} from '../../types/HeaderButton'
 import UserStatusContext from "../../../context/UserStatusContext";
+import {metaMask, hooks} from "../../../wallet/metaMask";
+import {walletConnectV2} from "../../../wallet/walletConnectV2";
+import {isMetaMaskInstalled} from '../../../metamask';
+import NotificationContext from "../../utils/NotificationContext";
 
 type WalletConnectorPropType = {
 	buttons: HeaderButton[]
@@ -24,19 +28,22 @@ const WalletConnector = (props: WalletConnectorPropType) => {
 	const {locale} = useContext(LocaleContext)
 	const {bubbleValue} = useContext(WalletConnectorBubbleContext)
 	const {isUserVerified} = useContext(UserDataContext)
-	const {chainId, account, deactivate, activate, active, connector, error} = useWeb3React();
+	const { account, connector} = useWeb3React();
+	const {useIsActive, useChainId} = hooks
+	const active = useIsActive()
+	const chainId = useChainId()
 	const ref = useRef(null);
 	const {buttons} = props
 	const [isConnectorOpen, setIsConnectorOpen] = useState(false)
 	const {isWalletVerified} = useContext(UserStatusContext)
+	const {displayNotification} = useContext(NotificationContext)
+
+	const [metaMaskInstalled, setMetaMaskInstalled] = useState<boolean>(false);
 
 	useOnClickOutside(ref, () => setIsConnectorOpen(false))
 
 	function mainButtonClick() {
 		setIsConnectorOpen(!isConnectorOpen)
-		// if (56 !== chainId) {
-		//   alert("To continue please switch your network to BSC")
-		// }
 	}
 
 	useEffect(() => {
@@ -46,11 +53,33 @@ const WalletConnector = (props: WalletConnectorPropType) => {
 			}
 		};
 		initNetwork();
-	}, [active, chainId, error]);
+	}, [active, chainId]);
 
 	const onClickConnectorButton = () => {
 		setIsConnectorOpen(false)
 	}
+
+	const connectMetaMask = async () => {
+		if (metaMaskInstalled) {
+			await metaMask.activate()
+				.then(res => console.log(res))
+				.catch((e) => console.log(e))
+			return
+		}
+
+		displayNotification(
+			'Please install MetaMask',
+			''
+		)
+	}
+
+	const connectWalletConnect = async () => {
+		try {
+			await walletConnectV2.activate()
+		} catch (error) {
+			console.error('Error connecting with WalletConnect', error);
+		}
+	};
 
 	return (
 		<div className={'disconnect-button-container'} ref={ref}>
@@ -97,9 +126,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
 						<div className={`connector-options ${isConnectorOpen ? 'open' : ''}`}>
 							<div
 								className={`connection-button`}
-								onClick={() => {
-									activate(injected).then();
-								}}
+								onClick={connectMetaMask}
 							>
 								<img
 									src="/images/wallet/metamask.svg"
@@ -112,11 +139,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
 							</div>
 							<div
 								className={`connection-button`}
-								onClick={() => {
-									activate(walletconnect).then(() => {
-										window.location.reload()
-									});
-								}}
+								onClick={connectWalletConnect}
 							>
 								<img
 									src="/images/wallet/trustwallet.svg"

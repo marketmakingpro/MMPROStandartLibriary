@@ -3,7 +3,6 @@
 import React, {ReactNode, useContext, useEffect, useState} from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import {useConnectionCheck} from "../hooks/useConnectionCheck";
 import {injected} from "../wallet";
 import {useWeb3React} from "@web3-react/core";
 import {useLocale} from "../hooks/useLocale";
@@ -22,10 +21,6 @@ import {NavItems} from "../types/NavItems";
 import ServerNotifications from "../components/ServerNotifications";
 import {IPage} from "../types/Page";
 import {INotification} from '../types/Notification';
-import ErrorBoundary from "../components/ErrorBoundary";
-import UserStatusContext from "../../context/UserStatusContext";
-import texts from './localization'
-import {localized} from "../hooks/localized";
 
 const mockServerNotifications: INotification[] = [
   {
@@ -116,8 +111,6 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
   const [isServerNotificationActive, setIsServerNotificationActive] = useState<boolean>(false)
   const [notifications, setNotifications] = useState<INotification[]>(mockServerNotifications)
 
-  useConnectionCheck();
-
   const displayNotification = (title: string, subtitle: string, icon: ReactNode) => {
     setNotificationIcon(icon)
     setNotificationTitle(title)
@@ -127,14 +120,6 @@ const StandardAppContainer = (props: StandardAppContainerProps) => {
       setShouldDisplayNotification(false);
     }, 2500);
   };
-
-  useEffect(() => {
-    injected.isAuthorized().then((isAuthorized) => {
-      if (isAuthorized && !active && !networkError) {
-        activate(injected);
-      }
-    });
-  }, [activate, networkError]);
 
   useEffect(() => {
     if (account) {
