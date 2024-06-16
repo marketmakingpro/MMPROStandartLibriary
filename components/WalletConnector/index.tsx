@@ -17,6 +17,7 @@ import {metaMask, hooks} from "../../../wallet/metaMask";
 import {walletConnectV2} from "../../../wallet/walletConnectV2";
 import {isMetaMaskInstalled} from '../../../metamask';
 import NotificationContext from "../../utils/NotificationContext";
+import {TonConnectButton} from "@tonconnect/ui-react";
 
 type WalletConnectorPropType = {
 	buttons: HeaderButton[]
@@ -28,7 +29,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
 	const {locale} = useContext(LocaleContext)
 	const {bubbleValue} = useContext(WalletConnectorBubbleContext)
 	const {isUserVerified} = useContext(UserDataContext)
-	const { account, connector} = useWeb3React();
+	const {account, connector} = useWeb3React();
 	const {useIsActive, useChainId} = hooks
 	const active = useIsActive()
 	const chainId = useChainId()
@@ -150,6 +151,7 @@ const WalletConnector = (props: WalletConnectorPropType) => {
 								/>
 								<span>Wallet connect</span>
 							</div>
+							<TonConnectButton/>
 						</div>
 					</div>
 				}

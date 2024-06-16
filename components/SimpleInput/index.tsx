@@ -52,7 +52,7 @@ const SimpleInput = (props: SimpleInputPropType) => {
       onBlur,
       onChange,
       onFocus,
-      value
+      value,
     },
     errorTooltipText,
     hasDefaultValueButton,
