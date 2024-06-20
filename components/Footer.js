@@ -5,7 +5,7 @@ export default (props) => {
     <div className="py-8" style={{minWidth: 340, zIndex: 4}}>
       <footer className="mx-auto px-4 flex flex-row justify-center items-center text-center">
         <a
-          href="https://twitter.com/MarketmakingProX"
+          href="https://x.com/MarketmakingX"
           target="_blank"
           rel="noopener noreferrer"
           className="mr-4"
